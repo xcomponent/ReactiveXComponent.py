@@ -1,9 +1,9 @@
 import unittest
 import json
-from ReactiveXComponent.communication.publisher import *
+from reactivexcomponent.communication.publisher import *
 
 p=publisher()
-p.file="WebSocket_NewDevinetteApi_test.xcApi"
+p.file="data\\WebSocket_NewDevinetteApi_test.xcApi"
 p.getXmlContent()
 
 class testPublisher(unittest.TestCase):

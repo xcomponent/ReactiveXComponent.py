@@ -1,2 +1,1 @@
-
-from ReactiveXComponent.configuration.serializer import serializer
+from reactivexcomponent.configuration.serializer import serializer

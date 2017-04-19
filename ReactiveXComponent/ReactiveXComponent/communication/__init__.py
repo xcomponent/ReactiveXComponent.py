@@ -1,4 +1,3 @@
-
-from ReactiveXComponent.communication.publisher import publisher
-from ReactiveXComponent.communication.xcConnection import xcConnection
-from ReactiveXComponent.communication.xcSession import xcSession
+from reactivexcomponent.communication.publisher import publisher
+from reactivexcomponent.communication.xcConnection import xcConnection
+from reactivexcomponent.communication.xcSession import xcSession

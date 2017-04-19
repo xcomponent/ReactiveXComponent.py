@@ -1,4 +1,4 @@
-from ReactiveXComponent.communication.xcConnection import *
+from reactivexcomponent.communication.xcConnection import *
 
 class xcomponentAPI:
 	

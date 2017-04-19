@@ -10,8 +10,8 @@ if on_rtd:
     #requirements.append('pyev')
 
 setup(
-    name = 'ReactiveXComponent',
-    packages = ['ReactiveXComponent','ReactiveXComponent.communication','ReactiveXComponent.configuration'],
+    name = 'reactivexcomponent',
+    packages = ['reactivexcomponent','reactivexcomponent.communication','reactivexcomponent.configuration'],
     version = '1.0.0',
     description = 'Python API for XComponent Platform',
     author = 'INVIVOO SOFTWARE',

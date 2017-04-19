@@ -1,5 +1,5 @@
-from ReactiveXComponent.communication.xcSession import *
-from ReactiveXComponent.xcomponentAPI import *
+from reactivexcomponent.communication.xcSession import *
+from reactivexcomponent.xcomponentAPI import *
 
 def callback(error,session):
     if error!=0:

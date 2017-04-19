@@ -1,11 +1,10 @@
 import websocket as WebSocket
 import ssl
-from ReactiveXComponent.communication.publisher import *
+from reactivexcomponent.communication.publisher import *
 
 class xcSession:
 		
 	def init(self,xcAPI, serverURL,callback):
-		print("xcSession",serverURL)
 		self.xcAPI=xcAPI
 		self.websocket = WebSocket.WebSocketApp(serverURL)
                               
