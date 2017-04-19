@@ -20,7 +20,7 @@ python setup.py check
 IF ERRORLEVEL 1 EXIT /B 1
 
 echo Creating source distribution package...
-python setup sdist
+python setup.py sdist
 IF ERRORLEVEL 1 EXIT /B 1
 
 echo Leaving virtual environment...
