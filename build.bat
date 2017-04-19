@@ -5,15 +5,14 @@ virtualenv venv
 call venv\Scripts\activate.bat
 
 echo Installing pylint...
+
+echo Installing dependencies...
 set LANG=en_US.UTF-8
-pip install pylint
+pip install -r ..\requirements.txt
+IF ERRORLEVEL 1 EXIT /B 1
 
 echo Running lint...
 pylint ReactiveXComponent -f parseable > pylint.txt
-
-echo Installing dependencies...
-pip install -r ..\requirements.txt
-IF ERRORLEVEL 1 EXIT /B 1
 
 echo Running tests...
 nosetests tests --with-xunit
