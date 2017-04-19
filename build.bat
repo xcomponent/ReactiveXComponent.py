@@ -1,11 +1,15 @@
-echo Running lint...
-pylint ReactiveXComponent -f parseable > pylint.txt
-
 cd ReactiveXComponent
 
 echo Creating virtual environment...
 virtualenv venv
 call venv\Scripts\activate.bat
+
+echo Installing pylint...
+set LANG=en_US.UTF-8
+pip install pylint
+
+echo Running lint...
+pylint ReactiveXComponent -f parseable > pylint.txt
 
 echo Installing dependencies...
 pip install -r ..\requirements.txt
