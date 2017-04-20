@@ -10,7 +10,7 @@ pip install -r ..\requirements.txt
 IF ERRORLEVEL 1 EXIT /B 1
 
 echo Running lint...
-pylint ReactiveXComponent -f parseable
+pylint reactivexcomponent -f parseable
 IF ERRORLEVEL 1 EXIT /B 1
 
 echo Running tests...
