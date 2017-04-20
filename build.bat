@@ -11,6 +11,7 @@ IF ERRORLEVEL 1 EXIT /B 1
 
 echo Running lint...
 pylint reactivexcomponent -f parseable > pylint.out
+type pylint.out
 IF ERRORLEVEL 1 EXIT /B 1
 
 echo Running tests...
