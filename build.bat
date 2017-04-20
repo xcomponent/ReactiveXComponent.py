@@ -10,10 +10,11 @@ pip install -r ..\requirements.txt
 IF ERRORLEVEL 1 EXIT /B 1
 
 echo Running lint...
-pylint ReactiveXComponent -f parseable > pylint.txt
+pylint reactivexcomponent -f parseable
+IF ERRORLEVEL 1 EXIT /B 1
 
 echo Running tests...
-nosetests tests --with-xunit
+nosetests tests --with-xunit --with-coverage
 IF ERRORLEVEL 1 EXIT /B 1
 
 echo Checking setup.py...
