@@ -9,7 +9,7 @@ def callback(error,session):
     publish.sender('Devinette','DevinetteChecker','XComponent.Devinette.UserObject.CheckWord',{})
     
     
-xcApiFile="WebSocket_NewDevinetteApi_test.xcApi"
+xcApiFile="data\\WebSocket_NewDevinetteApi_test.xcApi"
 serverURL="wss://localhost:443"
 xcApi=xcomponentAPI()
 xcApi.createSession(xcApiFile,serverURL,callback)
