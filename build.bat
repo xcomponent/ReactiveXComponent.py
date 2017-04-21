@@ -18,10 +18,14 @@ IF ERRORLEVEL 1 (
 )
 
 echo Running tests...
+<<<<<<< HEAD
 cd tests/unit
 python -m unittest discover
 cd ../../
 ::nosetests tests/unit --with-xunit --with-cov --cov reactivexcomponent
+=======
+nosetests tests/unit --with-xunit --with-cov --cov reactivexcomponent 
+>>>>>>> b31eddd530c8e7c09a3dbda0ab6d7eee21461058
 IF ERRORLEVEL 1 EXIT /B 1
 
 echo Checking setup.py...
