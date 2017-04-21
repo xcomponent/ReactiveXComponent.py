@@ -3,7 +3,7 @@ import json
 from reactivexcomponent.communication.publisher import *
 
 p=Publisher()
-p.file="data\\WebSocket_NewDevinetteApi_test.xcApi"
+p.file="unit\\data\\WebSocket_NewDevinetteApi_test.xcApi"
 p.get_xml_content()
 
 class test_publisher(unittest.TestCase):

@@ -1,4 +1,4 @@
-cd ReactiveXComponent
+cd reactivexcomponent
 
 echo Creating virtual environment...
 virtualenv venv
@@ -18,7 +18,10 @@ IF ERRORLEVEL 1 (
 )
 
 echo Running tests...
-nosetests tests --with-xunit --with-coverage
+cd tests/unit
+python -m unittest discover
+cd ../../
+::nosetests tests/unit --with-xunit --with-cov --cov reactivexcomponent
 IF ERRORLEVEL 1 EXIT /B 1
 
 echo Checking setup.py...
