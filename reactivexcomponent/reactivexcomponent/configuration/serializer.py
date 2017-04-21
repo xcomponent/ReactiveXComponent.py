@@ -1,7 +1,8 @@
+""" Serialization """
+
 import json
 
 class serializer:
-        def convertToWebsocketInputFormat(data):
-                winput='{0} {1} {2}'.format(data['RoutingKey'],data['ComponentCode'],json.dumps(data['Event']))
-                return winput
-	
+    def convert_to_websocket_input_format(data):
+        winput='{0} {1} {2}'.format(data['RoutingKey'],data['ComponentCode'],json.dumps(data['Event']))
+        return winput

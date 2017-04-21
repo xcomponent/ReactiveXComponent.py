@@ -1,0 +1,57 @@
+************* Module reactivexcomponent
+reactivexcomponent\__init__.py:14: [C0413(wrong-import-position), ] Import "from reactivexcomponent.xcomponentAPI import xcomponentAPI" should be placed at the top of the module
+reactivexcomponent\__init__.py:16: [C0413(wrong-import-position), ] Import "from reactivexcomponent.communication import publisher" should be placed at the top of the module
+reactivexcomponent\__init__.py:17: [C0413(wrong-import-position), ] Import "from reactivexcomponent.communication import xcConnection" should be placed at the top of the module
+reactivexcomponent\__init__.py:18: [C0413(wrong-import-position), ] Import "from reactivexcomponent.communication import xcSession" should be placed at the top of the module
+reactivexcomponent\__init__.py:19: [C0413(wrong-import-position), ] Import "from reactivexcomponent.configuration import serializer" should be placed at the top of the module
+************* Module reactivexcomponent.xcomponentAPI
+reactivexcomponent\xcomponentAPI.py:1: [C0103(invalid-name), ] Invalid module name "xcomponentAPI"
+reactivexcomponent\xcomponentAPI.py:3: [C0103(invalid-name), xcomponentAPI] Invalid class name "xcomponentAPI"
+reactivexcomponent\xcomponentAPI.py:5: [C0103(invalid-name), xcomponentAPI.create_session] Invalid argument name "xcAPI"
+reactivexcomponent\xcomponentAPI.py:5: [C0103(invalid-name), xcomponentAPI.create_session] Invalid argument name "serverURL"
+reactivexcomponent\xcomponentAPI.py:6: [W0201(attribute-defined-outside-init), xcomponentAPI.create_session] Attribute 'connection' defined outside __init__
+************* Module reactivexcomponent.communication.publisher
+reactivexcomponent\communication\publisher.py:19: [C0301(line-too-long), ] Line too long (150/100)
+reactivexcomponent\communication\publisher.py:49: [C0301(line-too-long), ] Line too long (115/100)
+reactivexcomponent\communication\publisher.py:50: [C0301(line-too-long), ] Line too long (173/100)
+reactivexcomponent\communication\publisher.py:56: [C0301(line-too-long), ] Line too long (159/100)
+reactivexcomponent\communication\publisher.py:57: [C0301(line-too-long), ] Line too long (115/100)
+reactivexcomponent\communication\publisher.py:60: [C0301(line-too-long), ] Line too long (119/100)
+reactivexcomponent\communication\publisher.py:61: [C0301(line-too-long), ] Line too long (189/100)
+reactivexcomponent\communication\publisher.py:67: [C0301(line-too-long), ] Line too long (125/100)
+reactivexcomponent\communication\publisher.py:74: [C0301(line-too-long), ] Line too long (295/100)
+reactivexcomponent\communication\publisher.py:85: [C0301(line-too-long), ] Line too long (139/100)
+reactivexcomponent\communication\publisher.py:16: [C0103(invalid-name), Publisher.__init__] Invalid attribute name "ns"
+reactivexcomponent\communication\publisher.py:13: [C0103(invalid-name), Publisher.__init__] Invalid variable name "rt"
+reactivexcomponent\communication\publisher.py:14: [C0103(invalid-name), Publisher.__init__] Invalid variable name "n"
+reactivexcomponent\communication\publisher.py:35: [C0103(invalid-name), Publisher.find_state_machine_by_name] Invalid variable name "stateMachines"
+reactivexcomponent\communication\publisher.py:36: [C0103(invalid-name), Publisher.find_state_machine_by_name] Invalid variable name "stateMach"
+reactivexcomponent\communication\publisher.py:89: [E1120(no-value-for-parameter), Publisher.sender] No value for argument 'data' in unbound method call
+reactivexcomponent\communication\publisher.py:89: [W0201(attribute-defined-outside-init), Publisher.sender] Attribute 'web_socket_input' defined outside __init__
+************* Module reactivexcomponent.communication.xcConnection
+reactivexcomponent\communication\xcConnection.py:1: [C0103(invalid-name), ] Invalid module name "xcConnection"
+reactivexcomponent\communication\xcConnection.py:5: [C0103(invalid-name), xcConnection] Invalid class name "xcConnection"
+reactivexcomponent\communication\xcConnection.py:7: [C0103(invalid-name), xcConnection.create_connection] Invalid argument name "xcAPI"
+reactivexcomponent\communication\xcConnection.py:7: [C0103(invalid-name), xcConnection.create_connection] Invalid argument name "serverURL"
+reactivexcomponent\communication\xcConnection.py:8: [W0201(attribute-defined-outside-init), xcConnection.create_connection] Attribute 'session' defined outside __init__
+************* Module reactivexcomponent.communication.xcSession
+reactivexcomponent\communication\xcSession.py:1: [C0103(invalid-name), ] Invalid module name "xcSession"
+reactivexcomponent\communication\xcSession.py:7: [C0103(invalid-name), xcSession] Invalid class name "xcSession"
+reactivexcomponent\communication\xcSession.py:10: [C0103(invalid-name), xcSession.init] Invalid attribute name "xcAPI"
+reactivexcomponent\communication\xcSession.py:9: [C0103(invalid-name), xcSession.init] Invalid argument name "xcAPI"
+reactivexcomponent\communication\xcSession.py:9: [C0103(invalid-name), xcSession.init] Invalid argument name "serverURL"
+reactivexcomponent\communication\xcSession.py:13: [W0613(unused-argument), xcSession.init.on_open] Unused argument 'websocket'
+reactivexcomponent\communication\xcSession.py:16: [W0613(unused-argument), xcSession.init.on_error] Unused argument 'websocket'
+reactivexcomponent\communication\xcSession.py:19: [W0613(unused-argument), xcSession.init.on_close] Unused argument 'websocket'
+reactivexcomponent\communication\xcSession.py:30: [C0103(invalid-name), xcSession.create_publisher] Invalid variable name "p"
+reactivexcomponent\communication\xcSession.py:11: [W0201(attribute-defined-outside-init), xcSession.init] Attribute 'websocket' defined outside __init__
+reactivexcomponent\communication\xcSession.py:10: [W0201(attribute-defined-outside-init), xcSession.init] Attribute 'xcAPI' defined outside __init__
+************* Module reactivexcomponent.configuration.serializer
+reactivexcomponent\configuration\serializer.py:7: [C0301(line-too-long), ] Line too long (108/100)
+reactivexcomponent\configuration\serializer.py:5: [C0103(invalid-name), serializer] Invalid class name "serializer"
+reactivexcomponent\configuration\serializer.py:6: [C0103(invalid-name), serializer.convert_to_websocket_input_format] Invalid method name "convert_to_websocket_input_format"
+reactivexcomponent\configuration\serializer.py:7: [W0201(attribute-defined-outside-init), serializer.convert_to_websocket_input_format] Attribute 'winput' defined outside __init__
+
+-----------------------------------
+Your code has been rated at 6.02/10
+
