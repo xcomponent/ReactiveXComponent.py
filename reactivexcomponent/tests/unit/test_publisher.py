@@ -3,7 +3,7 @@ import json
 from reactivexcomponent.communication.publisher import *
 
 p=Publisher()
-p.file="tests\\unit\\data\\WebSocket_NewDevinetteApi_test.xcApi"
+p.file="data\\WebSocket_NewDevinetteApi_test.xcApi"
 p.get_xml_content()
 
 class test_publisher(unittest.TestCase):
@@ -44,5 +44,9 @@ class test_publisher(unittest.TestCase):
             p.get_publisher_details(component_code,state_machine_code,message_type)
 
 if __name__=="__main__":
-    unittest.main()        
+    log_file = 'unittest.txt'
+    f = open(log_file, "w")
+    runner = unittest.TextTestRunner(f)
+    unittest.main(testRunner=runner) 
+    f.close()       
         
