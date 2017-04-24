@@ -11,12 +11,12 @@ class Publisher:
 		tree=etree.parse(self.file)
 		tree1=etree.tostring(tree)
 		rt=etree.fromstring(tree1)
-		n={'xmlns':'http://xcomponent.com/DeploymentConfig.xsd'}
+		nmsp={'xmlns':'http://xcomponent.com/DeploymentConfig.xsd'}
 		self.root=rt
-		self.ns=n
+		self.namespace=nmsp
 
 	def find_component(self,component_name):
-		for component in ((self.root).findall('xmlns:codesConverter',self.ns))[0].findall('xmlns:components',self.ns)[0].findall('xmlns:component',self.ns):
+		for component in ((self.root).findall('xmlns:codesConverter',self.namespace))[0].findall('xmlns:components',self.namespace)[0].findall('xmlns:component',self.namespace):
 			if (component.attrib['name']==component_name):
 				return component
 
@@ -32,8 +32,8 @@ class Publisher:
 		
 	def find_state_machine_by_name(self,component,state_machine_name):
 		state_machine=[]
-		for stateMachines in component.findall('xmlns:stateMachines',self.ns):
-			for stateMach in stateMachines.findall('xmlns:stateMachine',self.ns):
+		for stateMachines in component.findall('xmlns:stateMachines',self.namespace):
+			for stateMach in stateMachines.findall('xmlns:stateMachine',self.namespace):
 				if (stateMach.attrib['name']==state_machine_name):
 					state_machine=stateMach
 		if (state_machine==[]):
@@ -46,26 +46,28 @@ class Publisher:
 		return int(state_machine.attrib['id'])
 
 	def get_publisher(self,component_code,state_machine_code,message_type):
-		for publish in ((self.root).findall('xmlns:clientAPICommunication',self.ns))[0].findall('xmlns:publish',self.ns):
-			if ((int(publish.attrib['componentCode'])==component_code) and (int(publish.attrib['stateMachineCode'])==state_machine_code) and (publish.attrib['event']==message_type)):
+		for publish in ((self.root).findall('xmlns:clientAPICommunication',self.namespace))[0].findall('xmlns:publish',self.namespace):
+			if ((int(publish.attrib['componentCode'])==component_code) and (int(publish.attrib['stateMachineCode'])==state_machine_code)
+				 and (publish.attrib['event']==message_type)):
 				return publish
 
 	def get_publisher_details(self,component_code,state_machine_code,message_type):
 		publish=self.get_publisher(component_code,state_machine_code,message_type)
 		if (publish=={}):
 			raise Exception('publisher not found - component code : %i - statemachine code : %i - message type : %s' % (component_code,state_machine_code,message_type))
-		return {'eventCode':int(publish.attrib['eventCode']),'routingKey':publish.findall('xmlns:topic',self.ns)[0].text}
+		return {'eventCode':int(publish.attrib['eventCode']),'routingKey':publish.findall('xmlns:topic',self.namespace)[0].text}
 		
 	def get_subscriber(self,component_code,state_machine_code,event_type):
-		for subscribe in ((self.root).findall('xmlns:clientAPICommunication',self.ns))[0].findall('xmlns:subscribe',self.ns):
-			if ((int(subscribe.attrib['componentCode'])==component_code) and (int(subscribe.attrib['stateMachineCode'])==state_machine_code) and ((subscribe.attrib['eventType']).upper==event_type)):
+		for subscribe in ((self.root).findall('xmlns:clientAPICommunication',self.namespace))[0].findall('xmlns:subscribe',self.namespace):
+			if ((int(subscribe.attrib['componentCode'])==component_code) and (int(subscribe.attrib['stateMachineCode'])==state_machine_code)
+				 and ((subscribe.attrib['eventType']).upper==event_type)):
 				return subscribe
 	
 	def get_subscriber_topic(self,component_code,state_machine_code,event_type):
 		subscribe=self.get_subscriber(component_code,state_machine_code,event_type)
 		if (subscriber==[]):
 			raise Exception('Subscriber not found - component code: %i - statemachine code: %i' % (component_code,state_machine_code))
-		return subscribe.findall('xmlns:topic',self.ns)[0].text
+		return subscribe.findall('xmlns:topic',self.namespace)[0].text
 		
 	def get_fsharp_format(self,value):
 		return {"Case":"Some", "Fields":[value]}
