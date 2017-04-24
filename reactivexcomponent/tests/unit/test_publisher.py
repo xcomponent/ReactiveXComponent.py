@@ -3,12 +3,12 @@ import json
 from reactivexcomponent.communication.publisher import *
 
 p=Publisher()
-p.file="data\\WebSocket_NewDevinetteApi_test.xcApi"
+p.file="tests\\unit\\data\\WebSocket_NewDevinetteApi_test.xcApi"
 p.get_xml_content()
 
 class test_publisher(unittest.TestCase):
     
-    def test_get_component_code(self):
+    def testget_component_code(self):
         """get_component_code should return the right code given an existing component name"""
         code=p.get_component_code('Devinette')
         correct_code=-725052640
@@ -36,7 +36,7 @@ class test_publisher(unittest.TestCase):
         correct_publish={'eventCode':8,'routingKey':'input.1_0.microservice1.Devinette.DevinetteChecker'}
         publish=p.get_publisher_details(-725052640,-2027871621,'XComponent.Devinette.UserObject.CheckWord')
         self.assertEqual(publish,correct_publish)
-        """GetPublisherDetails should throw exeption when using an unknown stateMachine name"""
+        """get_publisher_details should throw exeption when using an unknown stateMachine name"""
         component_code=101
         state_machine_code=102
         message_type='type'
@@ -44,9 +44,9 @@ class test_publisher(unittest.TestCase):
             p.get_publisher_details(component_code,state_machine_code,message_type)
 
 if __name__=="__main__":
-    log_file = 'unittest.txt'
-    f = open(log_file, "w")
-    runner = unittest.TextTestRunner(f)
-    unittest.main(testRunner=runner) 
-    f.close()       
+	log_file = "tests\\unit\\unittest.txt"
+	f = open(log_file, "w")
+	runner = unittest.TextTestRunner(f)
+	unittest.main(testRunner=runner)
+	f.close()   
         
