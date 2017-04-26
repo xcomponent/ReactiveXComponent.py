@@ -1,9 +1,7 @@
-""" Create Connection """
+from reactivexcomponent.communication.xcSession import XcSession
 
-from reactivexcomponent.communication.xcSession import *
-
-class xcConnection:
+class XcConnection:
 	
 	def create_connection(self,xc_api,server_url,callback):
-		self.session=xcSession()
+		self.session = XcSession()
 		self.session.init(xc_api,server_url,callback)

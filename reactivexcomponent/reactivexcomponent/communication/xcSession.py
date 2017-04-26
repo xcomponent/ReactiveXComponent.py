@@ -1,13 +1,11 @@
-""" Session """
-
 import ssl
 import websocket as WebSocket
-from reactivexcomponent.communication.publisher import *
+from reactivexcomponent.communication.publisher import Publisher
 
-class xcSession:
+class XcSession:
 		
 	def init(self,xc_api, server_url,callback):
-		self.xc_api=xc_api
+		self.xc_api = xc_api
 		self.websocket = WebSocket.WebSocketApp(server_url)
                               
 		def on_open(websocket):
@@ -27,8 +25,8 @@ class xcSession:
 		self.websocket.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
 
 	def create_publisher(self):
-		p=Publisher()
-		p.file=self.xc_api
-		p.get_xml_content()
-		p.websocket=self.websocket
-		return p
+		publisher = Publisher()
+		publisher.file = self.xc_api
+		publisher.get_xml_content()
+		publisher.websocket = self.websocket
+		return publisher

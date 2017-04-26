@@ -1,5 +1,4 @@
-""" import modules """
 
 from reactivexcomponent.communication.publisher import Publisher
-from reactivexcomponent.communication.xcConnection import xcConnection
-from reactivexcomponent.communication.xcSession import xcSession
+from reactivexcomponent.communication.xcConnection import XcConnection
+from reactivexcomponent.communication.xcSession import XcSession

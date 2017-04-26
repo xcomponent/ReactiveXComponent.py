@@ -1,7 +1,7 @@
-from reactivexcomponent.communication.xcConnection import *
+from reactivexcomponent.communication.xcConnection import XcConnection
 
-class xcomponentAPI:
+class XcomponentAPI:
 	
 	def create_session(self,xc_api,serverURL,callback):
-		self.connection=xcConnection()
+		self.connection = XcConnection()
 		self.connection.create_connection(xc_api,serverURL,callback)

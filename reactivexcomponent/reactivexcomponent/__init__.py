@@ -11,7 +11,7 @@ except ImportError:
 
 logging.getLogger(__name__).addHandler(NullHandler())
 
-from reactivexcomponent.xcomponentAPI import xcomponentAPI
+from reactivexcomponent.xcomponentAPI import XcomponentAPI
 
 from reactivexcomponent.communication import publisher
 from reactivexcomponent.communication import xcConnection
