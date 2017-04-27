@@ -96,3 +96,9 @@ ENV/
 
 # Pylint report 
 **/pylint.out
+
+# Generated MANIFEST file by distutils
+reactivexcomponent/MANIFEST
+
+# VIM swap files
+*.swp
