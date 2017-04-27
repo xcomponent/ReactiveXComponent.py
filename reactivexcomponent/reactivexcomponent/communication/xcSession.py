@@ -2,7 +2,7 @@ import ssl
 import websocket as WebSocket
 from reactivexcomponent.communication.publisher import Publisher
 
-
+SUCCESS=None
 class XcSession:
 
     def init(self, xc_api, server_url, callback):
@@ -10,10 +10,10 @@ class XcSession:
         self.websocket = WebSocket.WebSocketApp(server_url)
 
         def on_open(websocket):
-            callback(0, self)
+            callback(SUCCESS, self)
 
         def on_error(websocket, error):
-            callback(error, 0)
+            callback(error, SUCCESS)
 
         def on_close(websocket):
             print('### session %s closed ###' % server_url)

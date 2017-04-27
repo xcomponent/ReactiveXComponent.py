@@ -43,23 +43,21 @@ class Publisher:
 
     def get_state_machine_code(self, component_name, state_machine_name):
         component = self._find_component_by_name(component_name)
-        state_machine = self._find_state_machine_by_name(
-            component, state_machine_name)
+        state_machine = self._find_state_machine_by_name(component, state_machine_name)
         return int(state_machine.attrib['id'])
 
-    def get_publisher(self, component_code, state_machine_code, message_type):
-        for publish in ((self.root).findall('xmlns:clientAPICommunication', self.namespace))[0].findall('xmlns:publish', self.namespace):
-            if ((int(publish.attrib['componentCode']) == component_code) and (int(publish.attrib['stateMachineCode']) == state_machine_code)
-                    and (publish.attrib['event'] == message_type)):
-                return publish
+    def _get_publisher(self, component_code, state_machine_code, message_type):
+        for publisher in ((self.root).findall('xmlns:clientAPICommunication', self.namespace))[0].findall('xmlns:publish', self.namespace):
+            if ((int(publisher.attrib['componentCode']) == component_code) and (int(publisher.attrib['stateMachineCode']) == state_machine_code)
+                    and (publisher.attrib['event'] == message_type)):
+                return publisher
 
     def get_publisher_details(self, component_code, state_machine_code, message_type):
-        publish = self.get_publisher(
-            component_code, state_machine_code, message_type)
-        if (publish is None):
+        publisher = self._get_publisher(component_code, state_machine_code, message_type)
+        if (publisher is None):
             raise Exception('publisher not found - component code : %i - statemachine code : %i - message type : %s' %
                             (component_code, state_machine_code, message_type))
-        return {'eventCode': int(publish.attrib['eventCode']), 'routingKey': publish.findall('xmlns:topic', self.namespace)[0].text}
+        return {'eventCode': int(publisher.attrib['eventCode']), 'routingKey': publisher.findall('xmlns:topic', self.namespace)[0].text}
 
     def get_subscriber(self, component_code, state_machine_code, event_type):
         for subscribe in ((self.root).findall('xmlns:clientAPICommunication', self.namespace))[0].findall('xmlns:subscribe', self.namespace):
@@ -68,43 +66,36 @@ class Publisher:
                 return subscribe
 
     def get_subscriber_topic(self, component_code, state_machine_code, event_type):
-        subscribe = self.get_subscriber(
-            component_code, state_machine_code, event_type)
+        subscribe = self.get_subscriber(component_code, state_machine_code, event_type)
         if (subscriber is None):
             raise Exception('Subscriber not found - component code: %i - statemachine code: %i' %
                             (component_code, state_machine_code))
         return subscribe.findall('xmlns:topic', self.namespace)[0].text
 
-    def get_fsharp_format(self, value):
+    def _get_fsharp_format(self, value):
         return {"Case": "Some", "Fields": [value]}
 
-    def get_header_config(self, component_code, state_machine_code, message_type):
-        return {"StateMachineCode": self.get_fsharp_format(state_machine_code),
-                "ComponentCode": self.get_fsharp_format(component_code),
+    def _get_header_config(self, component_code, state_machine_code, message_type):
+        return {"StateMachineCode": self._get_fsharp_format(state_machine_code),
+                "ComponentCode": self._get_fsharp_format(component_code),
                 "EventCode": self.get_publisher_details(component_code,
                                                         state_machine_code,
                                                         message_type)["eventCode"],
                 "IncomingType": 0,
-                "MessageType": self.get_fsharp_format(message_type)}
+                "MessageType": self._get_fsharp_format(message_type)}
 
-    def get_routing_key(self, component_code, state_machine_code, message_type):
-        publish = self.get_publisher_details(
-            component_code, state_machine_code, message_type)
-        return publish['routingKey']
+    def _get_routing_key(self, component_code, state_machine_code, message_type):
+        publisher = self.get_publisher_details(component_code, state_machine_code, message_type)
+        return publisher['routingKey']
 
-    def get_data_to_send(self, component_name, state_machine_name, message_type, json_message):
+    def _get_data_to_send(self, component_name, state_machine_name, message_type, json_message):
         component_code = self.get_component_code(component_name)
-        state_machine_code = self.get_state_machine_code(
-            component_name, state_machine_name)
-        header_config = self.get_header_config(
-            component_code, state_machine_code, message_type)
-        routing_key = self.get_routing_key(
-            component_code, state_machine_code, message_type)
+        state_machine_code = self.get_state_machine_code(component_name, state_machine_name)
+        header_config = self._get_header_config(component_code, state_machine_code, message_type)
+        routing_key = self._get_routing_key(component_code, state_machine_code, message_type)
         return {"RoutingKey": routing_key, "ComponentCode": component_code, "Event": {"Header": header_config, "JsonMessage": json.dumps(json_message)}}
 
     def sender(self, component_name, state_machine_name, message_type, json_message):
-        data = self.get_data_to_send(
-            component_name, state_machine_name, message_type, json_message)
-        self.web_socket_input = Serializer.convert_to_websocket_input_format(
-            data)
+        data = self._get_data_to_send(component_name, state_machine_name, message_type, json_message)
+        self.web_socket_input = Serializer.convert_to_websocket_input_format(data)
         self.websocket.send(self.web_socket_input)
