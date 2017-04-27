@@ -5,10 +5,15 @@ from reactivexcomponent.communication.publisher import Publisher
 SUCCESS = None
 class XcSession:
 
+    def __init__(self):
+        self.websocket = None
+        self.xc_api = ""
+
     def init(self, xc_api, server_url, callback):
         self.xc_api = xc_api
         self.websocket = WebSocket.WebSocketApp(server_url)
 
+        # pylint: disable=unused-argument
         def on_open(websocket):
             callback(SUCCESS, self)
 

@@ -1,5 +1,4 @@
 import unittest
-import json
 from reactivexcomponent.communication.publisher import Publisher
 
 

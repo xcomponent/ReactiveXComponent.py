@@ -1,1 +1,1 @@
-from reactivexcomponent.configuration.serializer import Serializer
+from reactivexcomponent.configuration.serializer import to_websocket_input_format

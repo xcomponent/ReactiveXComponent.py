@@ -24,11 +24,6 @@ var/
 .installed.cfg
 *.egg
 .vscode/
-dist/
-build/
-nosetests.xml
-reactivexcomponent/tests/unit/test_session.py
-
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

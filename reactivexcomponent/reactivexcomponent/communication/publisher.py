@@ -1,10 +1,17 @@
 import json
-from reactivexcomponent.configuration.serializer import Serializer
+from reactivexcomponent.configuration.serializer import to_websocket_input_format
 from lxml import etree
 
 class Publisher:
 
+    def __init__(self):
+        self.root = None
+        self.namespace = {}
+        self.web_socket_input = None
+        self.websocket = None
+    
     def get_xml_content(self):
+        # pylint: disable=no-member
         tree = etree.parse(self.file)
         data = etree.tostring(tree)
         root = etree.fromstring(data)
@@ -31,10 +38,10 @@ class Publisher:
 
     def _find_state_machine_by_name(self, component, state_machine_name):
         state_machine = None
-        for stateMachines in component.findall('xmlns:stateMachines', self.namespace):
-            for stateMach in stateMachines.findall('xmlns:stateMachine', self.namespace):
-                if stateMach.attrib['name'] == state_machine_name:
-                    state_machine = stateMach
+        for state_machines in component.findall('xmlns:stateMachines', self.namespace):
+            for state_mach in state_machines.findall('xmlns:stateMachine', self.namespace):
+                if state_mach.attrib['name'] == state_machine_name:
+                    state_machine = state_mach
         if state_machine is None:
             raise Exception('State Machine %s not found' % state_machine_name)
         return state_machine
@@ -113,5 +120,5 @@ class Publisher:
             state_machine_name, \
             message_type, json_message)
 
-        self.web_socket_input = Serializer.convert_to_websocket_input_format(data)
+        self.web_socket_input = to_websocket_input_format(data)
         self.websocket.send(self.web_socket_input)
