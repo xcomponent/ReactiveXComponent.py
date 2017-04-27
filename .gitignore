@@ -27,6 +27,7 @@ var/
 dist/
 build/
 nosetests.xml
+reactivexcomponent/tests/unit/test_session.py
 
 
 # PyInstaller
