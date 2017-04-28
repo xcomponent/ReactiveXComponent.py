@@ -18,6 +18,7 @@ class Publisher:
         tree = etree.parse(self.file)
         data = etree.tostring(tree)
         root = etree.fromstring(data)
+        # pylint: enable=no-member
         namespace = {'xmlns': 'http://xcomponent.com/DeploymentConfig.xsd'}
         self.root = root
         self.namespace = namespace
