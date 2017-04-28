@@ -2,8 +2,6 @@ import json
 from reactivexcomponent.configuration.serializer import to_websocket_input_format
 from lxml import etree
 
-# helper methods
-
 def format_fsharp_field(value):
     return {"Case": "Some", "Fields": [value]}
 
