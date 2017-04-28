@@ -2,6 +2,9 @@ import json
 from reactivexcomponent.configuration.serializer import to_websocket_input_format
 from lxml import etree
 
+def format_fsharp_field(value):
+    return {"Case": "Some", "Fields": [value]}
+
 class Publisher:
 
     def __init__(self):
@@ -15,6 +18,7 @@ class Publisher:
         tree = etree.parse(self.file)
         data = etree.tostring(tree)
         root = etree.fromstring(data)
+        # pylint: enable=no-member
         namespace = {'xmlns': 'http://xcomponent.com/DeploymentConfig.xsd'}
         self.root = root
         self.namespace = namespace
@@ -88,17 +92,14 @@ class Publisher:
                             (component_code, state_machine_code))
         return subscriber.findall('xmlns:topic', self.namespace)[0].text
 
-    def _get_fsharp_format(self, value):
-        return {"Case": "Some", "Fields": [value]}
-
     def _get_header_config(self, component_code, state_machine_code, message_type):
-        return {"StateMachineCode": self._get_fsharp_format(state_machine_code),
-                "ComponentCode": self._get_fsharp_format(component_code),
+        return {"StateMachineCode": format_fsharp_field(state_machine_code),
+                "ComponentCode": format_fsharp_field(component_code),
                 "EventCode": self.get_publisher_details(component_code,
                                                         state_machine_code,
                                                         message_type)["eventCode"],
                 "IncomingType": 0,
-                "MessageType": self._get_fsharp_format(message_type)}
+                "MessageType": format_fsharp_field(message_type)}
 
     def _get_routing_key(self, component_code, state_machine_code, message_type):
         publisher = self.get_publisher_details(component_code, state_machine_code, message_type)
