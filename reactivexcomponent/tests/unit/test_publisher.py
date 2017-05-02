@@ -29,7 +29,7 @@ class TestPublisher(unittest.TestCase):
         self.assertEqual(code, correct_code)
         """get_state_machine_code throws exception when using an unkonwn state machine name"""
         with self.assertRaises(Exception):
-            self.p.get_state_machine_code('Devinette','UnkownStateMachine')
+            self.p.get_state_machine_code('Devinette', 'UnkownStateMachine')
 
     def test_get_publisher_details(self):
         """get_publisher_details should return the right publisher details given existing component and stateMachine codes"""
