@@ -1,3 +1,4 @@
+# pylint: disable=redefined-outer-name
 import ssl
 import websocket as WebSocket
 from reactivexcomponent.communication.publisher import Publisher

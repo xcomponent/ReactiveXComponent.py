@@ -80,6 +80,7 @@ class APIConfiguration:
             'routingKey': publisher.findall('xmlns:topic', NAME_SPACE)[0].text
         }
 
+    # pylint: disable=unused-argument
     def _get_subscriber(self, component_code, state_machine_code, event_type):
         for subscriber in ((self.root).findall('xmlns:clientAPICommunication', NAME_SPACE))[0].\
                 findall('xmlns:subscribe', NAME_SPACE):

@@ -1,3 +1,5 @@
+# pylint: disable=redefined-outer-name
+# pylint: disable=unused-import
 import json
 from reactivexcomponent.configuration.serializer import to_websocket_input_format
 from reactivexcomponent.configuration.api_configuration import format_fsharp_field
@@ -20,7 +22,6 @@ class Publisher:
                 "IncomingType": 0,
                 "MessageType": format_fsharp_field(message_type)}
 
-    # pylint: disable=line-too-long
     def _get_routing_key(self, component_code, state_machine_code, message_type):
         publisher = self.configuration.get_publisher_details(component_code, state_machine_code, message_type)
         return publisher['routingKey']
