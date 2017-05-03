@@ -22,6 +22,7 @@ class XcSession:
 
         def on_close(websocket):
             print('### session %s closed ###' % server_url)
+        # pylint: enable=unused-argument
 
         self.websocket.on_open = on_open
         self.websocket.on_error = on_error
