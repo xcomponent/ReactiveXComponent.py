@@ -1,16 +1,16 @@
-# pylint: disable=redefined-outer-name
 import ssl
 import websocket as WebSocket
 from reactivexcomponent.communication.publisher import Publisher
-from reactivexcomponent.configuration.api_configuration import APIConfiguration as configuration
+from reactivexcomponent.configuration.api_configuration import APIConfiguration
 
 SUCCESS = None
+
 
 class XcSession:
 
     def __init__(self):
         self.websocket = None
-        self.configuration = configuration
+        self.configuration = APIConfiguration
         self.xc_api = ""
 
     def init(self, xc_api, server_url, callback):
@@ -26,6 +26,7 @@ class XcSession:
 
         def on_close(websocket):
             print('### session %s closed ###' % server_url)
+        # pylint: enable=unused-argument
 
         self.websocket.on_open = on_open
         self.websocket.on_error = on_error
@@ -34,7 +35,7 @@ class XcSession:
         self.websocket.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
 
     def create_publisher(self):
-        configuration = self.configuration(self.xc_api)
-        configuration.get_xml_content()
-        publisher = Publisher(configuration, self.websocket)
+        config = self.configuration(self.xc_api)
+        config.load_xml()
+        publisher = Publisher(config, self.websocket)
         return publisher

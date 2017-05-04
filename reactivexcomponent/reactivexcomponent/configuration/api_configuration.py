@@ -1,15 +1,6 @@
-""" API Configuartion """
-
 from lxml import etree
 
-EVENT_TYPE = {"Update": "UPDATE", "Error": "ERROR"}
-
-KINDS = {"Snapshot": 1, "Private": 2, "Public": 3}
-
-COMMANDS = {"hb": "hb", "update": "update", "subscribe": "subscribe",
-            "get_xc_api": "getXcApi", "get_xc_api_list": "getXcApiList", "get_model": "getModel"}
-
-NAME_SPACE = {'xmlns': 'http://xcomponent.com/DeploymentConfig.xsd'}
+NAMESPACE = {'xmlns': 'http://xcomponent.com/DeploymentConfig.xsd'}
 
 
 def format_fsharp_field(value):
@@ -22,17 +13,18 @@ class APIConfiguration:
         self.file = file
         self.root = None
 
-    def get_xml_content(self):
+    def load_xml(self):
         # pylint: disable=no-member
         tree = etree.parse(self.file)
         data = etree.tostring(tree)
         root = etree.fromstring(data)
         self.root = root
+        # pylint: enable=no-member
 
     def _find_component(self, component_name):
-        for component in ((self.root).findall('xmlns:codesConverter', NAME_SPACE))[0].\
-                findall('xmlns:components', NAME_SPACE)[0].\
-                findall('xmlns:component', NAME_SPACE):
+        for component in ((self.root).findall('xmlns:codesConverter', NAMESPACE))[0].\
+                findall('xmlns:components', NAMESPACE)[0].\
+                findall('xmlns:component', NAMESPACE):
             if component.attrib['name'] == component_name:
                 return component
 
@@ -48,8 +40,8 @@ class APIConfiguration:
 
     def _find_state_machine_by_name(self, component, state_machine_name):
         state_machine = None
-        for state_machines in component.findall('xmlns:stateMachines', NAME_SPACE):
-            for state_mach in state_machines.findall('xmlns:stateMachine', NAME_SPACE):
+        for state_machines in component.findall('xmlns:stateMachines', NAMESPACE):
+            for state_mach in state_machines.findall('xmlns:stateMachine', NAMESPACE):
                 if state_mach.attrib['name'] == state_machine_name:
                     state_machine = state_mach
         if state_machine is None:
@@ -62,8 +54,8 @@ class APIConfiguration:
         return int(state_machine.attrib['id'])
 
     def _get_publisher(self, component_code, state_machine_code, message_type):
-        for publisher in ((self.root).findall('xmlns:clientAPICommunication', NAME_SPACE))[0] \
-                .findall('xmlns:publish', NAME_SPACE):
+        for publisher in ((self.root).findall('xmlns:clientAPICommunication', NAMESPACE))[0] \
+                .findall('xmlns:publish', NAMESPACE):
             if (int(publisher.attrib['componentCode']) == component_code) \
                 and (int(publisher.attrib['stateMachineCode']) == state_machine_code) \
                     and (publisher.attrib['event'] == message_type):
@@ -77,20 +69,22 @@ class APIConfiguration:
             raise Exception(message % (component_code, state_machine_code, message_type))
         return {
             'eventCode': int(publisher.attrib['eventCode']),
-            'routingKey': publisher.findall('xmlns:topic', NAME_SPACE)[0].text
+            'routingKey': publisher.findall('xmlns:topic', NAMESPACE)[0].text
         }
 
     # pylint: disable=unused-argument
     def _get_subscriber(self, component_code, state_machine_code, event_type):
-        for subscriber in ((self.root).findall('xmlns:clientAPICommunication', NAME_SPACE))[0].\
-                findall('xmlns:subscribe', NAME_SPACE):
+        for subscriber in ((self.root).findall('xmlns:clientAPICommunication', NAMESPACE))[0].\
+                findall('xmlns:subscribe', NAMESPACE):
             if subscriber.attrib['eventType'] == 'UPDATE':
-                if (int(subscriber.attrib['componentCode']) == component_code) and (int(subscriber.attrib['stateMachineCode']) == state_machine_code):
+                if (int(subscriber.attrib['componentCode']) == component_code) \
+				and (int(subscriber.attrib['stateMachineCode']) == state_machine_code):
                     return subscriber
+        # pylint: enable=unused-argument
 
     def get_subscriber_topic(self, component_code, state_machine_code, event_type):
         subscriber = self._get_subscriber(component_code, state_machine_code, event_type)
         if subscriber is None:
             raise Exception('Subscriber not found - component code: %i - statemachine code: %i' %
                             (component_code, state_machine_code))
-        return subscriber.findall('xmlns:topic', NAME_SPACE)[0].text
+        return subscriber.findall('xmlns:topic', NAMESPACE)[0].text

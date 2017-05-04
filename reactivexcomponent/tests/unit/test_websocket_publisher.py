@@ -9,9 +9,9 @@ class TestWebSocketPublisher(unittest.TestCase):
     def setUp(self):
         self.publisher = Publisher(dependencies.configuration, dependencies.create_mock_websocket())
 
-    def test_send_method(self):
+    def test_send_message(self):
         self.publisher.websocket.send = Mock()
-        self.publisher.sender("component_name", "state_machine_name",
+        self.publisher.send_message("component_name", "state_machine_name",
                               dependencies.MESSAGE_TYPE, dependencies.JSON_MESSAGE)
         self.publisher.websocket.send.assert_called_once()
         self.publisher.websocket.send.assert_called_with(
