@@ -10,7 +10,6 @@ class XcSession:
 
     def __init__(self):
         self.websocket = None
-        self.configuration = APIConfiguration
         self.xc_api = ""
 
     def init(self, xc_api, server_url, callback):
@@ -35,7 +34,6 @@ class XcSession:
         self.websocket.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
 
     def create_publisher(self):
-        config = self.configuration(self.xc_api)
-        config.load_xml()
-        publisher = Publisher(config, self.websocket)
+        configuration = APIConfiguration(self.xc_api)
+        publisher = Publisher(configuration, self.websocket)
         return publisher

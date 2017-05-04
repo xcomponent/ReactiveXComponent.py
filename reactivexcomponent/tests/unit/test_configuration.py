@@ -7,7 +7,6 @@ class TestConfiguration(unittest.TestCase):
     def setUp(self):
         self.configuration = APIConfiguration(
             "tests\\unit\\data\\WebSocket_NewDevinetteApi_test.xcApi")
-        self.configuration.load_xml()
 
     def test_get_component_code(self):
         """get_component_code should return the right code given an existing component name"""

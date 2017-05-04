@@ -19,9 +19,9 @@ class Publisher:
                 "MessageType": format_fsharp_field(message_type)}
 
     def _get_routing_key(self, component_code, state_machine_code, message_type):
-        publisher = self.configuration.get_publisher_details(
+        publisher_details = self.configuration.get_publisher_details(
             component_code, state_machine_code, message_type)
-        return publisher['routingKey']
+        return publisher_details['routingKey']
 
     def _get_data_to_send(self, component_name, state_machine_name, message_type, json_message):
         component_code = self.configuration.get_component_code(component_name)

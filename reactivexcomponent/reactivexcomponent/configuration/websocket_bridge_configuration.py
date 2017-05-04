@@ -15,7 +15,7 @@ class Kinds:
     Public = 3
 
 
-class Comands:
+class Command:
 
     hb = "hb"
 

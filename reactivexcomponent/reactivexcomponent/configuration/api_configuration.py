@@ -10,15 +10,10 @@ def format_fsharp_field(value):
 class APIConfiguration:
 
     def __init__(self, file):
-        self.file = file
-        self.root = None
-
-    def load_xml(self):
         # pylint: disable=no-member
-        tree = etree.parse(self.file)
+        tree = etree.parse(file)
         data = etree.tostring(tree)
-        root = etree.fromstring(data)
-        self.root = root
+        self.root = etree.fromstring(data)
         # pylint: enable=no-member
 
     def _find_component(self, component_name):
