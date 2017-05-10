@@ -6,7 +6,7 @@ class EventType:
     Error = "ERROR"
 
 
-class Kinds:
+class WebsocketTopicKind:
 
     Snapshot = 1
 
