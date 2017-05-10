@@ -1,8 +1,11 @@
 import ssl
 import websocket as WebSocket
 from reactivexcomponent.communication.publisher import Publisher
+from reactivexcomponent.configuration.api_configuration import APIConfiguration
 
 SUCCESS = None
+
+
 class XcSession:
 
     def __init__(self):
@@ -31,8 +34,6 @@ class XcSession:
         self.websocket.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
 
     def create_publisher(self):
-        publisher = Publisher()
-        publisher.file = self.xc_api
-        publisher.get_xml_content()
-        publisher.websocket = self.websocket
+        configuration = APIConfiguration(self.xc_api)
+        publisher = Publisher(configuration, self.websocket)
         return publisher
