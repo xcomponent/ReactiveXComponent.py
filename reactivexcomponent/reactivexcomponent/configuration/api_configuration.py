@@ -6,6 +6,15 @@ NAMESPACE = {'xmlns': 'http://xcomponent.com/DeploymentConfig.xsd'}
 def format_fsharp_field(value):
     return {"Case": "Some", "Fields": [value]}
 
+def find_state_machine_by_name(component, state_machine_name):
+    state_machine = None
+    for state_machines in component.findall('xmlns:stateMachines', NAMESPACE):
+        for state_mach in state_machines.findall('xmlns:stateMachine', NAMESPACE):
+            if state_mach.attrib['name'] == state_machine_name:
+                state_machine = state_mach
+    if state_machine is None:
+        raise Exception('State Machine %s not found' % state_machine_name)
+    return state_machine
 
 class APIConfiguration:
 
@@ -33,19 +42,10 @@ class APIConfiguration:
         component = self._find_component_by_name(component_name)
         return int(component.attrib['id'])
 
-    def _find_state_machine_by_name(self, component, state_machine_name):
-        state_machine = None
-        for state_machines in component.findall('xmlns:stateMachines', NAMESPACE):
-            for state_mach in state_machines.findall('xmlns:stateMachine', NAMESPACE):
-                if state_mach.attrib['name'] == state_machine_name:
-                    state_machine = state_mach
-        if state_machine is None:
-            raise Exception('State Machine %s not found' % state_machine_name)
-        return state_machine
 
     def get_state_machine_code(self, component_name, state_machine_name):
         component = self._find_component_by_name(component_name)
-        state_machine = self._find_state_machine_by_name(component, state_machine_name)
+        state_machine = find_state_machine_by_name(component, state_machine_name)
         return int(state_machine.attrib['id'])
 
     def _get_publisher(self, component_code, state_machine_code, message_type):

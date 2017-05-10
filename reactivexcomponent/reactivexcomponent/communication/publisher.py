@@ -2,7 +2,6 @@ import json
 from reactivexcomponent.configuration.serializer import to_websocket_input_format
 from reactivexcomponent.configuration.api_configuration import format_fsharp_field
 
-
 class Publisher:
 
     def __init__(self, apiconfiguration, websocket_instance):
