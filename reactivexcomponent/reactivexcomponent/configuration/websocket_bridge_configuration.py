@@ -17,9 +17,7 @@ class WebsocketTopicKind:
 
 class Command:
 
-    # pylint: disable=invalid-name
-    hb = "hb"
-    # pylint: enable=invalid-name
+    heartbeat = "hb"
 
     update = "update"
 

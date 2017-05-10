@@ -12,7 +12,7 @@ class TestWebSocketPublisher(unittest.TestCase):
     def test_send_message(self):
         self.publisher.websocket.send = Mock()
         self.publisher.send_message("component_name", "state_machine_name",
-                              dependencies.MESSAGE_TYPE, dependencies.JSON_MESSAGE)
+                                    dependencies.MESSAGE_TYPE, dependencies.JSON_MESSAGE)
         self.publisher.websocket.send.assert_called_once()
         self.publisher.websocket.send.assert_called_with(
             dependencies.get_correct_websocket_input_format(True))

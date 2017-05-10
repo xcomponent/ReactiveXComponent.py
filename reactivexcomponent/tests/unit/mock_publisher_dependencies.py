@@ -1,3 +1,4 @@
+import uuid
 import json
 from unittest.mock import MagicMock
 
@@ -6,14 +7,14 @@ STATE_MACHINE_CODE = -2027871621
 EVENT_CODE = 8
 MESSAGE_TYPE = "XComponent.Devinette.UserObject.CheckWord"
 ROUTING_KEY = "input.1_0.microservice1.Devinette.DevinetteChecker"
-GUI_EXAMPLE = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+UUID = str(uuid.uuid4())
 SESSION_DATA = "sessionData"
 JSON_MESSAGE = {"Name": "My Name"}
 
-guid = MagicMock(["create"], key="guid")
-guid.create = MagicMock(return_value=GUI_EXAMPLE)
-guid.create("create", key="guid")
-guid.create.assert_called_with("create", key="guid")
+uid = MagicMock(["create"], key="uid")
+uid.create = MagicMock(return_value=UUID)
+uid.create("create", key="uid")
+uid.create.assert_called_with("create", key="uid")
 
 
 def get_header(visibility):
