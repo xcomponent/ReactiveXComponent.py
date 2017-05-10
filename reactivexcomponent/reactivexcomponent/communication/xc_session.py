@@ -1,6 +1,7 @@
 import ssl
 import websocket as WebSocket
 from reactivexcomponent.communication.publisher import Publisher
+from reactivexcomponent.communication.subscriber import Subscriber
 from reactivexcomponent.configuration.api_configuration import APIConfiguration
 
 SUCCESS = None
@@ -16,6 +17,9 @@ class XcSession:
         self.xc_api = xc_api
         self.websocket = WebSocket.WebSocketApp(server_url)
 
+        def on_message(websocket,message):
+            print(message)
+
         # pylint: disable=unused-argument
         def on_open(websocket):
             callback(SUCCESS, self)
@@ -27,6 +31,7 @@ class XcSession:
             print('### session %s closed ###' % server_url)
         # pylint: enable=unused-argument
 
+        self.websocket.on_message = on_message
         self.websocket.on_open = on_open
         self.websocket.on_error = on_error
         self.websocket.on_close = on_close
@@ -37,3 +42,8 @@ class XcSession:
         configuration = APIConfiguration(self.xc_api)
         publisher = Publisher(configuration, self.websocket)
         return publisher
+
+    def create_subscriber(self):
+        configuration = APIConfiguration(self.xc_api)
+        subscriber = Subscriber(configuration, self.websocket)
+        return subscriber
