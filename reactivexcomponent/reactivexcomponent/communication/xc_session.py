@@ -17,10 +17,10 @@ class XcSession:
         self.xc_api = xc_api
         self.websocket = WebSocket.WebSocketApp(server_url)
 
-        def on_message(websocket,message):
+        # pylint: disable=unused-argument
+        def on_message(websocket, message):
             print(message)
 
-        # pylint: disable=unused-argument
         def on_open(websocket):
             callback(SUCCESS, self)
 
