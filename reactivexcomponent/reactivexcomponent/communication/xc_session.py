@@ -45,5 +45,5 @@ class XcSession:
 
     def create_subscriber(self):
         configuration = APIConfiguration(self.xc_api)
-        subscriber = Subscriber(configuration, self.websocket)
+        subscriber = Subscriber(configuration, self.websocket, )
         return subscriber

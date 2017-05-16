@@ -18,6 +18,28 @@ def find_state_machine_by_name(component, state_machine_name):
     return state_machine
 
 
+def find_state_machine_by_code(component, state_machine_code):
+    state_machine = None
+    for state_machines in component.findall('xmlns:stateMachines', NAMESPACE):
+        for state_mach in state_machines.findall('xmlns:stateMachine', NAMESPACE):
+            if state_mach.attrib['id'] == state_machine_code:
+                state_machine = state_mach
+    if state_machine is None:
+        raise Exception('State Machine %s not found' % state_machine_code)
+    return state_machine
+
+
+def find_state_by_code(state_machine, state_code):
+    state = None
+    for stat in state_machine.findall('xmlns:states', NAMESPACE)[0].\
+            findall('xmlns:State', NAMESPACE):
+        if stat.attrib["id"] == state_code:
+            state = stat
+    if state is None:
+        raise Exception('State %s not found' % state_code)
+    return state
+
+
 class APIConfiguration:
 
     def __init__(self, file):
@@ -38,6 +60,19 @@ class APIConfiguration:
         component = self._find_component(component_name)
         if component is None:
             raise Exception('Component %s not found' % component_name)
+        return component
+
+    def _find_component_name(self, component_code):
+        for component in ((self.root).findall('xmlns:codesConverter', NAMESPACE))[0].\
+                findall('xmlns:components', NAMESPACE)[0].\
+                findall('xmlns:component', NAMESPACE):
+            if component.attrib['id'] == component_code:
+                return component
+
+    def _find_component_by_code(self, component_code):
+        component = self._find_component_name(component_code)
+        if component is None:
+            raise Exception('Component %s not found' % component_code)
         return component
 
     def get_component_code(self, component_name):
@@ -76,7 +111,7 @@ class APIConfiguration:
                 if (int(subscriber.attrib['componentCode']) == component_code) \
                         and (int(subscriber.attrib['stateMachineCode']) == state_machine_code):
                     return subscriber
-        # pylint: enable=unused-argument
+    # pylint: enable=unused-argument
 
     def get_subscriber_topic(self, component_code, state_machine_code, event_type):
         subscriber = self._get_subscriber(component_code, state_machine_code, event_type)
@@ -84,3 +119,9 @@ class APIConfiguration:
             raise Exception('Subscriber not found - component code: %i - statemachine code: %i' %
                             (component_code, state_machine_code))
         return subscriber.findall('xmlns:topic', NAMESPACE)[0].text
+
+    def get_state_name(self, component_code, state_machine_code, state_code):
+        component = self._find_component_by_code(component_code)
+        state_machine = find_state_machine_by_code(component, state_machine_code)
+        state = find_state_by_code(state_machine, state_code)
+        return state.attrib["name"]
