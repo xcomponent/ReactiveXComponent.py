@@ -32,7 +32,7 @@ class Subscriber:
         input_data = command_data_websocket_format(command_data)
         self.websocket.send(input_data)
 
-    def send_subscribe_request(self, component_name, state_machine_name):
+    def _send_subscribe_request(self, component_name, state_machine_name):
         component_code = self.configuration.get_component_code(component_name)
         state_machine_code = self.configuration.get_state_machine_code(
             component_name, state_machine_name)
@@ -42,4 +42,4 @@ class Subscriber:
         self.add_subscribe_state_machine(component_name, state_machine_name)
 
     def subscriber(self, component_name, state_machine_name):
-        self.send_subscribe_request(component_name, state_machine_name)
+        self._send_subscribe_request(component_name, state_machine_name)
