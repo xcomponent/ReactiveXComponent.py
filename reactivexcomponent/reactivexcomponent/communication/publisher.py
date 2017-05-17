@@ -2,6 +2,7 @@ import json
 from reactivexcomponent.configuration.serializer import to_websocket_input_format
 from reactivexcomponent.configuration.api_configuration import format_fsharp_field
 
+
 class Publisher:
 
     def __init__(self, apiconfiguration, websocket_instance):
@@ -35,5 +36,6 @@ class Publisher:
         }
 
     def send_message(self, component_name, state_machine_name, message_type, json_message):
-        data = self._get_data_to_send(component_name, state_machine_name, message_type, json_message)
+        data = self._get_data_to_send(
+            component_name, state_machine_name, message_type, json_message)
         self.websocket.send(to_websocket_input_format(data))

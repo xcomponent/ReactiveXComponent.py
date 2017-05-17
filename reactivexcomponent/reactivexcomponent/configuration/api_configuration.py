@@ -6,6 +6,7 @@ NAMESPACE = {'xmlns': 'http://xcomponent.com/DeploymentConfig.xsd'}
 def format_fsharp_field(value):
     return {"Case": "Some", "Fields": [value]}
 
+
 def find_state_machine_by_name(component, state_machine_name):
     state_machine = None
     for state_machines in component.findall('xmlns:stateMachines', NAMESPACE):
@@ -15,6 +16,7 @@ def find_state_machine_by_name(component, state_machine_name):
     if state_machine is None:
         raise Exception('State Machine %s not found' % state_machine_name)
     return state_machine
+
 
 class APIConfiguration:
 
@@ -41,7 +43,6 @@ class APIConfiguration:
     def get_component_code(self, component_name):
         component = self._find_component_by_name(component_name)
         return int(component.attrib['id'])
-
 
     def get_state_machine_code(self, component_name, state_machine_name):
         component = self._find_component_by_name(component_name)
@@ -73,7 +74,7 @@ class APIConfiguration:
                 findall('xmlns:subscribe', NAMESPACE):
             if subscriber.attrib['eventType'] == 'UPDATE':
                 if (int(subscriber.attrib['componentCode']) == component_code) \
-				and (int(subscriber.attrib['stateMachineCode']) == state_machine_code):
+                        and (int(subscriber.attrib['stateMachineCode']) == state_machine_code):
                     return subscriber
         # pylint: enable=unused-argument
 
