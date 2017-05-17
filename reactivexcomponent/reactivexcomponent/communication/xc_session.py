@@ -1,5 +1,6 @@
 import ssl
 import websocket as WebSocket
+from rx.subjects import Subject
 from reactivexcomponent.communication.publisher import Publisher
 from reactivexcomponent.communication.subscriber import Subscriber
 from reactivexcomponent.configuration.api_configuration import APIConfiguration
@@ -12,14 +13,19 @@ class XcSession:
     def __init__(self):
         self.websocket = None
         self.xc_api = ""
-
+        self.configuration = None
+        self.reply_publisher = None
+        self.stream = Subject()
+        
     def init(self, xc_api, server_url, callback):
         self.xc_api = xc_api
         self.websocket = WebSocket.WebSocketApp(server_url)
+        self.configuration = APIConfiguration(self.xc_api)
+        self.reply_publisher = Publisher(self.configuration, self.websocket)
 
         # pylint: disable=unused-argument
         def on_message(websocket, message):
-            print(message)
+            self.stream.on_next(message)
 
         def on_open(websocket):
             callback(SUCCESS, self)
@@ -45,5 +51,5 @@ class XcSession:
 
     def create_subscriber(self):
         configuration = APIConfiguration(self.xc_api)
-        subscriber = Subscriber(configuration, self.websocket, )
+        subscriber = Subscriber(configuration, self.websocket, self.stream, self.reply_publisher)
         return subscriber

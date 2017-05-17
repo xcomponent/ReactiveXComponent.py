@@ -5,10 +5,9 @@ from reactivexcomponent.configuration.api_configuration import format_fsharp_fie
 
 class Publisher:
 
-    def __init__(self, apiconfiguration, websocket_instance, session_data):
+    def __init__(self, apiconfiguration, websocket_instance):
         self.configuration = apiconfiguration
         self.websocket = websocket_instance
-        self.session_data = session_data
 
     def _header_config(self, component_code, state_machine_code, message_type):
         return {"StateMachineCode": format_fsharp_field(state_machine_code),
@@ -51,8 +50,7 @@ class Publisher:
                                                                   state_machine_code,
                                                                   message_type)["eventCode"],
             "IncomingType": 0,
-            "MessageType": format_fsharp_field(message_type),
-            "SessionData": format_fsharp_field(self.session_data)
+            "MessageType": format_fsharp_field(message_type)
             }
 
     def _data_to_send_with_state_machine_ref(self, state_machine_ref, message_type, json_message):
