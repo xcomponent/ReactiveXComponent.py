@@ -21,12 +21,12 @@ class Subscriber:
         self.websocket = websocket_instance
         self.subscribed_state_machines = {}
 
-    def add_subscribe_state_machine(self, component_name, state_machine_name):
+    def _add_subscribe_state_machine(self, component_name, state_machine_name):
         self.subscribed_state_machines[component_name] = (
             self.subscribed_state_machines).get(component_name, [])
         (self.subscribed_state_machines[component_name]).append(state_machine_name)
 
-    def send_subscribe_request_to_topic(self, topic, kind):
+    def _send_subscribe_request_to_topic(self, topic, kind):
         data = get_data_to_send(topic, kind)
         command_data = {"Command": Command.subscribe, "Data": data}
         input_data = command_data_websocket_format(command_data)
@@ -38,8 +38,8 @@ class Subscriber:
             component_name, state_machine_name)
         topic = self.configuration.get_subscriber_topic(
             component_code, state_machine_code, EventType.Update)
-        self.send_subscribe_request_to_topic(topic, WebsocketTopicKind.Public)
-        self.add_subscribe_state_machine(component_name, state_machine_name)
+        self._send_subscribe_request_to_topic(topic, WebsocketTopicKind.Public)
+        self._add_subscribe_state_machine(component_name, state_machine_name)
 
     def subscriber(self, component_name, state_machine_name):
         self._send_subscribe_request(component_name, state_machine_name)
