@@ -44,4 +44,3 @@ def deserialize_without_topic(data):
         "command": command,
         "stringData": string_data
     }
-

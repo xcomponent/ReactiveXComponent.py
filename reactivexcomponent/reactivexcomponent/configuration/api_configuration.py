@@ -22,7 +22,7 @@ def find_state_machine_by_code(component, state_machine_code):
     state_machine = None
     for state_machines in component.findall('xmlns:stateMachines', NAMESPACE):
         for state_mach in state_machines.findall('xmlns:stateMachine', NAMESPACE):
-            if state_mach.attrib['id'] == state_machine_code:
+            if int(state_mach.attrib['id']) == state_machine_code:
                 state_machine = state_mach
     if state_machine is None:
         raise Exception('State Machine %s not found' % state_machine_code)
@@ -33,7 +33,7 @@ def find_state_by_code(state_machine, state_code):
     state = None
     for stat in state_machine.findall('xmlns:states', NAMESPACE)[0].\
             findall('xmlns:State', NAMESPACE):
-        if stat.attrib["id"] == state_code:
+        if int(stat.attrib["id"]) == state_code:
             state = stat
     if state is None:
         raise Exception('State %s not found' % state_code)
@@ -66,7 +66,7 @@ class APIConfiguration:
         for component in ((self.root).findall('xmlns:codesConverter', NAMESPACE))[0].\
                 findall('xmlns:components', NAMESPACE)[0].\
                 findall('xmlns:component', NAMESPACE):
-            if component.attrib['id'] == component_code:
+            if int(component.attrib['id']) == component_code:
                 return component
 
     def _find_component_by_code(self, component_code):
