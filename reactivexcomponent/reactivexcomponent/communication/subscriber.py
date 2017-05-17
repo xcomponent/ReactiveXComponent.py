@@ -41,5 +41,5 @@ class Subscriber:
         self._send_subscribe_request_to_topic(topic, WebsocketTopicKind.Public)
         self._add_subscribe_state_machine(component_name, state_machine_name)
 
-    def subscriber(self, component_name, state_machine_name):
+    def subscribe(self, component_name, state_machine_name):
         self._send_subscribe_request(component_name, state_machine_name)
