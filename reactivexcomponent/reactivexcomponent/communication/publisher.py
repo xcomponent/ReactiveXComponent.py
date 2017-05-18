@@ -35,6 +35,13 @@ class Publisher:
             "Event": {"Header": header_config, "JsonMessage": json.dumps(json_message)}
         }
 
+    def can_publish(self, component_name, state_machine_name, message_type):
+        if self.configuration.contains_state_machine(component_name, state_machine_name):
+            component_code = self.configuration.get_component_code(component_name)
+            state_machine_code = self.configuration.get_state_machine_code(component_name, state_machine_name)
+            return self.configuration.contains_publisher(component_code, state_machine_code, message_type)
+        return False
+
     def send_message(self, component_name, state_machine_name, message_type, json_message):
         data = self._data_to_send(
             component_name, state_machine_name, message_type, json_message)

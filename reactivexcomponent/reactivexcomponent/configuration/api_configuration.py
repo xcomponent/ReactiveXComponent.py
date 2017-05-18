@@ -1,4 +1,5 @@
 from lxml import etree
+from reactivexcomponent.configuration.websocket_bridge_configuration import EventType
 
 NAMESPACE = {'xmlns': 'http://xcomponent.com/DeploymentConfig.xsd'}
 
@@ -84,13 +85,31 @@ class APIConfiguration:
         state_machine = find_state_machine_by_name(component, state_machine_name)
         return int(state_machine.attrib['id'])
 
+    def contains_publisher(self, component_code, state_machine_code, message_type):
+        return self._get_publisher(component_code, state_machine_code, message_type) != None
+
+    def contains_state_machine(self, component_name, state_machine_name):
+        component = self._find_component(component_name)
+        contain = False
+        if component is not None:
+            for state_mach in component.findall('xmlns:stateMachines', NAMESPACE)[0].\
+                                        findall('xmlns:stateMachine', NAMESPACE):
+                if state_mach.attrib['name'] == state_machine_name:
+                    contain = True
+        return contain
+
+    def contains_subscriber(self, component_code, state_machine_code, event_type):
+        return self._get_subscriber(component_code, state_machine_code, event_type) != None
+
     def _get_publisher(self, component_code, state_machine_code, message_type):
-        for publisher in ((self.root).findall('xmlns:clientAPICommunication', NAMESPACE))[0] \
+        publisher = None
+        for publish in ((self.root).findall('xmlns:clientAPICommunication', NAMESPACE))[0] \
                 .findall('xmlns:publish', NAMESPACE):
-            if (int(publisher.attrib['componentCode']) == component_code) \
-                and (int(publisher.attrib['stateMachineCode']) == state_machine_code) \
-                    and (publisher.attrib['event'] == message_type):
-                return publisher
+            if (int(publish.attrib['componentCode']) == component_code) \
+                and (int(publish.attrib['stateMachineCode']) == state_machine_code) \
+                    and (publish.attrib['event'] == message_type):
+                publisher = publish
+        return publisher
 
     def get_publisher_details(self, component_code, state_machine_code, message_type):
         publisher = self._get_publisher(component_code, state_machine_code, message_type)
@@ -105,12 +124,14 @@ class APIConfiguration:
 
     # pylint: disable=unused-argument
     def _get_subscriber(self, component_code, state_machine_code, event_type):
-        for subscriber in ((self.root).findall('xmlns:clientAPICommunication', NAMESPACE))[0].\
+        subscriber = None
+        for subscrib in ((self.root).findall('xmlns:clientAPICommunication', NAMESPACE))[0].\
                 findall('xmlns:subscribe', NAMESPACE):
-            if subscriber.attrib['eventType'] == 'UPDATE':
-                if (int(subscriber.attrib['componentCode']) == component_code) \
-                        and (int(subscriber.attrib['stateMachineCode']) == state_machine_code):
-                    return subscriber
+            if subscrib.attrib['eventType'] == EventType.Update:
+                if (int(subscrib.attrib['componentCode']) == component_code) \
+                        and (int(subscrib.attrib['stateMachineCode']) == state_machine_code):
+                    subscriber = subscrib
+        return subscriber
     # pylint: enable=unused-argument
 
     def get_subscriber_topic(self, component_code, state_machine_code, event_type):

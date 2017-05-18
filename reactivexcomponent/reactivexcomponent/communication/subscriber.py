@@ -11,15 +11,6 @@ def get_data_to_send(topic, kind):
             })
            }
 
-# pylint: disable=unused-argument
-
-
-# callback
-def state_machine_update_listener(data):
-    pass
-# pylint: enable=unused-argument
-
-
 def is_same_state_machine(json_data, state_machine_code):
     same_state_machine = (json_data["stateMachineRef"]["StateMachineCode"] == state_machine_code)
     return same_state_machine
@@ -27,6 +18,11 @@ def is_same_state_machine(json_data, state_machine_code):
 def is_same_component(json_data, component_code):
     same_component = (json_data["stateMachineRef"]["ComponentCode"] == component_code)
     return same_component
+
+def is_subscribed(subscribed_state_machines, component_name, state_machine_name):
+    subscribed = (component_name in subscribed_state_machines) and (
+        state_machine_name in subscribed_state_machines[component_name])
+    return subscribed
 
 
 class Subscriber:
@@ -92,6 +88,16 @@ class Subscriber:
         self._send_subscribe_request_to_topic(topic, WebsocketTopicKind.Public)
         self._add_subscribe_state_machine(component_name, state_machine_name)
 
+    def can_subscribe(self, component_name, state_machine_name):
+        component_code = self.configuration.get_component_code(component_name)
+        state_machine_code = self.configuration.get_state_machine_code(component_name, state_machine_name)
+        return self.configuration.contains_subscriber(component_code, state_machine_code, EventType.Update)
+
+    def get_state_machine_updates(self, component_name, state_machine_name):
+        filtered_observable = self._prepare_state_machine_updates(component_name, state_machine_name)
+        self._send_subscribe_request(component_name, state_machine_name)
+        return filtered_observable
+
     # pylint: disable=redefined-outer-name
     def subscribe(self, component_name, state_machine_name, state_machine_update_listener):
         observable_subscriber = self._prepare_state_machine_updates(component_name, state_machine_name).subscribe(
@@ -104,3 +110,23 @@ class Subscriber:
         for i in range(len(self.observable_subscribers)):
             self.observable_subscribers[i].dispose()
         self.observable_subscribers = []
+
+    # pylint: disable=invalid-name
+    def remove_subscribed_state_machines(self, component_name, state_machine_name):
+        index = self.subscribed_state_machines[component_name].index(state_machine_name)
+        del self.subscribed_state_machines[component_name][index]
+    # pylint: enable=invalid-name
+
+    def unsubscribe(self, component_name, state_machine_name):
+        if is_subscribed(self.subscribed_state_machines, component_name, state_machine_name):
+            component_code = self.configuration.get_component_code(component_name)
+            state_machine_code = self.configuration.get_state_machine_code(component_name, state_machine_name)
+            topic = self.configuration.get_subscriber_topic(component_code, state_machine_code, EventType.Update)
+            kind = WebsocketTopicKind.Public
+            data = get_data_to_send(topic, kind)
+            command_data = {
+                "Command": Command.unsubscribe,
+                "Data": data
+            }
+            self.websocket.send(command_data_websocket_format(command_data))
+            self.remove_subscribed_state_machines(component_name, state_machine_name)
