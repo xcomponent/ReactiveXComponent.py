@@ -1,3 +1,5 @@
+[![](http://slack.xcomponent.com/badge.svg)](http://slack.xcomponent.com/)
+
 # Reactive XComponent API for Python 
 
 Reactive XComponent is a Python client API that allows you to interact with microservices generated with XComponent software.
