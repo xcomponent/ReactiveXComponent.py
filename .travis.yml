@@ -1,6 +1,6 @@
 language: python
 python:
-  - "3.6"
+- '3.6'
 sudo: false
 branches:
   only:
@@ -9,3 +9,6 @@ os:
 - linux
 script:
 - ./build.sh
+notifications:
+  slack:
+    secure: orP12TVST8t+743jNzSldO/bwBfEBeY0fNPqqL37oNgJN3taNqjZgl4LBQc3+OfRl4BJzUCchxN9L/6nyL7ZVyavd8EsBhPXwt3Zt0exMT4wM6hwlLx9OaF0qZNsRCZQLwCbnpU895Di0PHgk1Eacfq/C3kauatol5y/A2/nG3Q2cQGEhDxnBW/XpVRc0yFHigDeem9dzgK/HlXit3h4pW2FzIYJqlYXcbLO34k0GwtIgsDi/23dmnAW7XMqy9bVmOyzxjpXawXra7hgBJ7AK6ya0F3hp86MURKMD+9nPe618h273al2PRF+BU34IHPxrbFa5WAYVYzhYev2ZwT4y0ovW77m0bn08/k68i8cn+M4kBuYBQK/SNVt4tuq6/Z0c3RwJ3keF/SCRKji8/yVqHyPdQkAH77Vhne2XSMpedqQnHTllwXQ4o9Bf12HBe8z37HQ3moXZzgyjvaogGAtV0r3mC5RRaqpedjgP9pqhTPdOOXxlmHxiVWMg/Qi8qjRP7NimtPTe6PSNgfDiuRthvNC2xVcUatX0o4jWVC4YM0FXQo+MSGiByXy1ne5gRCmNpgqvyzJNziHFD8BtIgdkasraAM/NY/BDIQHc+mgjjgHHedCh4Yy1g8tN9jSoXm4LT0ALfTKhQ3iM3/QEtjLkEKGUReqHi8PdUtZ9GzYDiA=  

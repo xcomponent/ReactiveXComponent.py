@@ -1,4 +1,5 @@
 [![](http://slack.xcomponent.com/badge.svg)](http://slack.xcomponent.com/)
+[![Build Status](https://travis-ci.org/xcomponent/ReactiveXComponent.py.svg?branch=master)](https://travis-ci.org/xcomponent/ReactiveXComponent.py)
 
 # Reactive XComponent API for Python 
 
