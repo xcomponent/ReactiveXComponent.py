@@ -11,7 +11,7 @@ def get_data_to_send(topic, kind):
             "JsonMessage": json.dumps({
                 "Topic": {"Key": topic, "Kind": kind}
             })
-           }
+            }
 
 
 class Subscriber:
