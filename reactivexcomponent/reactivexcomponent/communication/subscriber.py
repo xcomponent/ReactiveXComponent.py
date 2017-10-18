@@ -24,7 +24,8 @@ class Subscriber:
     def _add_subscribe_state_machine(self, component_name, state_machine_name):
         self.subscribed_state_machines[component_name] = (
             self.subscribed_state_machines).get(component_name, [])
-        (self.subscribed_state_machines[component_name]).append(state_machine_name)
+        (self.subscribed_state_machines[component_name]).append(
+            state_machine_name)
 
     def _send_subscribe_request_to_topic(self, topic, kind):
         data = get_data_to_send(topic, kind)

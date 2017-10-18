@@ -1,4 +1,5 @@
 [![](http://slack.xcomponent.com/badge.svg)](http://slack.xcomponent.com/)
+[![Build Status](https://travis-ci.org/xcomponent/ReactiveXComponent.py.svg?branch=master)](https://travis-ci.org/xcomponent/ReactiveXComponent.py)
 
 # Reactive XComponent API for Python 
 
@@ -11,10 +12,19 @@ build.bat
 ```
 A ``reactivexcomponent-X.Y.Z.tar.gz`` pip package is build on the *dist\reactivexcomponent* folder.
 
+## Build from source (on a Linux/OSX environment)
+Use the *build* script to build the API from sources.
+```
+./build.sh
+```
+A ``reactivexcomponent-X.Y.Z.tar.gz`` pip package is build on the *dist\reactivexcomponent* folder.
+
+
 ## Usage
 
 Use the scripts *dev_up* and *dev_down* to activate and deactivate a virtualenv containing the reactivexcomponent API.
 
+Windows example:
 ```
 > dev_up.bat
 (venv) > python3
@@ -25,6 +35,20 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> exit()
 
 (venv) > dev_down.bat
+> 
+```
+
+Linux/OSX example:
+```
+> source dev_up.sh
+(venv) > python3
+> python3
+Python 3.6.1 (v3.6.1:69c0db5, Mar 21 2017, 18:41:36) [MSC v.1900 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import reactivexcomponent
+>>> exit()
+
+(venv) > deactivate
 > 
 ```
 

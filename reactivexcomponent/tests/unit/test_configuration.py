@@ -1,4 +1,6 @@
 import unittest
+import os
+
 from reactivexcomponent.configuration.api_configuration import APIConfiguration
 
 
@@ -6,7 +8,7 @@ class TestConfiguration(unittest.TestCase):
 
     def setUp(self):
         self.configuration = APIConfiguration(
-            "tests\\unit\\data\\WebSocket_NewDevinetteApi_test.xcApi")
+            os.path.join("tests", "unit", "data", "WebSocket_NewDevinetteApi_test.xcApi"))
 
     def test_get_component_code(self):
         """get_component_code should return the right code given an existing component name"""
@@ -19,16 +21,19 @@ class TestConfiguration(unittest.TestCase):
 
     def test_get_state_machine_code(self):
         """get_state_machine_code should return the right code given existing component name and statemachine name"""
-        code = self.configuration.get_state_machine_code('Devinette', 'Devinette')
+        code = self.configuration.get_state_machine_code(
+            'Devinette', 'Devinette')
         correct_code = -725052640
         self.assertEqual(code, correct_code)
 
-        code = self.configuration.get_state_machine_code('Devinette', 'DevinetteStatus')
+        code = self.configuration.get_state_machine_code(
+            'Devinette', 'DevinetteStatus')
         correct_code = 2089109814
         self.assertEqual(code, correct_code)
         """get_state_machine_code throws exception when using an unkonwn state machine name"""
         with self.assertRaises(Exception):
-            self.configuration.get_state_machine_code('Devinette', 'UnkownStateMachine')
+            self.configuration.get_state_machine_code(
+                'Devinette', 'UnkownStateMachine')
 
     def test_get_publisher_details(self):
         """get_publisher_details should return the right publisher details given existing component and stateMachine codes"""
