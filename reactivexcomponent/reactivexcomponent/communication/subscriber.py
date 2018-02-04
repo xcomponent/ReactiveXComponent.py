@@ -131,6 +131,3 @@ class Subscriber:
             }
             self.websocket.send(command_data_websocket_format(command_data))
             self.remove_subscribed_state_machines(component_name, state_machine_name)
-
-    def subscribe(self, component_name, state_machine_name):
-        self._send_subscribe_request(component_name, state_machine_name)

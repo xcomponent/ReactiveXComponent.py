@@ -56,6 +56,7 @@ class APIConfiguration:
                 findall('xmlns:component', NAMESPACE):
             if component.attrib['name'] == component_name:
                 return component
+        return None
 
     def _find_component_by_name(self, component_name):
         component = self._find_component(component_name)
@@ -69,6 +70,7 @@ class APIConfiguration:
                 findall('xmlns:component', NAMESPACE):
             if int(component.attrib['id']) == component_code:
                 return component
+        return None
 
     def _find_component_by_code(self, component_code):
         component = self._find_component_name(component_code)
