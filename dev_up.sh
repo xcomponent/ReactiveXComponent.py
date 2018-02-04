@@ -2,7 +2,7 @@
 cd reactivexcomponent
 
 echo Creating virtual environment...
-virtualenv venv
+virtualenv -p python3 venv
 source $PWD/venv/bin/activate
 
 echo Installing dependencies...
