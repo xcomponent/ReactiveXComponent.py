@@ -33,7 +33,6 @@ class XcSession:
         self.reply_publisher = Publisher(self.configuration, self.websocket)
         self.publishers.append(self.reply_publisher)
 
-        # pylint: disable=unused-argument
         def on_message(websocket, message):
             self.stream.on_next(message)
 
@@ -45,7 +44,6 @@ class XcSession:
 
         def on_close(websocket):
             print('### session %s closed ###' % server_url)
-        # pylint: enable=unused-argument
 
         self.websocket.on_message = on_message
         self.websocket.on_open = on_open

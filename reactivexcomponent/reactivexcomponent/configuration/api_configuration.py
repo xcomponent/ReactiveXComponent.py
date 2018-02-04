@@ -44,11 +44,9 @@ def find_state_by_code(state_machine, state_code):
 class APIConfiguration:
 
     def __init__(self, file):
-        # pylint: disable=no-member
         tree = etree.parse(file)
         data = etree.tostring(tree)
         self.root = etree.fromstring(data)
-        # pylint: enable=no-member
 
     def _find_component(self, component_name):
         for component in ((self.root).findall('xmlns:codesConverter', NAMESPACE))[0].\
@@ -124,7 +122,6 @@ class APIConfiguration:
             'routingKey': publisher.findall('xmlns:topic', NAMESPACE)[0].text
         }
 
-    # pylint: disable=unused-argument
     def _get_subscriber(self, component_code, state_machine_code, event_type):
         subscriber = None
         for subscrib in ((self.root).findall('xmlns:clientAPICommunication', NAMESPACE))[0].\
@@ -134,7 +131,6 @@ class APIConfiguration:
                         and (int(subscrib.attrib['stateMachineCode']) == state_machine_code):
                     subscriber = subscrib
         return subscriber
-    # pylint: enable=unused-argument
 
     def get_subscriber_topic(self, component_code, state_machine_code, event_type):
         subscriber = self._get_subscriber(component_code, state_machine_code, event_type)

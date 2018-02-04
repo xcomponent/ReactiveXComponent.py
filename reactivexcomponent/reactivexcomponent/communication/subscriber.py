@@ -35,7 +35,6 @@ class Subscriber:
         self.observable_subscribers = []
         self.reply_publisher = reply_publisher
 
-    # pylint: disable=unnecessary-lambda
     def _json_data_from_event(self, data):
         json_data = get_json_data(data)
         component_code = json_data["Header"]["ComponentCode"]["Fields"][0]
@@ -48,9 +47,7 @@ class Subscriber:
             "StateMachineCode": json_data["Header"]["StateMachineCode"]["Fields"][0],
             "ComponentCode": json_data["Header"]["ComponentCode"]["Fields"][0],
             "StateName": self_subscriber.configuration.get_state_name(component_code, state_machine_code, state_code),
-            "send": lambda state_machine_ref, message_type, json_message: 
-                    self_subscriber.reply_publisher.\
-                    send_with_state_machine_ref(state_machine_ref, message_type, json_message)
+            "send": self_subscriber.reply_publisher.send_with_state_machine_ref
         }
         return {
             "stateMachineRef": state_machine_ref,
@@ -61,7 +58,7 @@ class Subscriber:
         component_code = self.configuration.get_component_code(component_name)
         state_machine_code = self.configuration.get_state_machine_code(
             component_name, state_machine_name)
-        filtered_observable = self.subject.map(lambda raw_message: deserialize(raw_message)) \
+        filtered_observable = self.subject.map(deserialize) \
                                  .filter(lambda data: data["command"] == Command.update) \
                                  .map(lambda data: self._json_data_from_event(data["stringData"])) \
                                  .filter(lambda json_data: is_same_component(json_data, component_code) and 
@@ -99,24 +96,20 @@ class Subscriber:
         self._send_subscribe_request(component_name, state_machine_name)
         return filtered_observable
 
-    # pylint: disable=redefined-outer-name
     def subscribe(self, component_name, state_machine_name, state_machine_update_listener):
-        observable_subscriber = self._prepare_state_machine_updates(component_name, state_machine_name).subscribe(
-            lambda json_data: state_machine_update_listener(json_data))
+        observable_subscriber = self._prepare_state_machine_updates(component_name, state_machine_name)\
+            .subscribe(state_machine_update_listener)
         self.observable_subscribers.append(observable_subscriber)
         self._send_subscribe_request(component_name, state_machine_name)
-    # pylint: enable=unnecessary-lambda, redefined-outer-name
 
     def dispose_observable_subscribers(self):
         for i in range(len(self.observable_subscribers)):
             self.observable_subscribers[i].dispose()
         self.observable_subscribers = []
 
-    # pylint: disable=invalid-name
     def remove_subscribed_state_machines(self, component_name, state_machine_name):
         index = self.subscribed_state_machines[component_name].index(state_machine_name)
         del self.subscribed_state_machines[component_name][index]
-    # pylint: enable=invalid-name
 
     def unsubscribe(self, component_name, state_machine_name):
         if is_subscribed(self.subscribed_state_machines, component_name, state_machine_name):
