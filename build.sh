@@ -14,7 +14,7 @@ rc=$?; if [[ $rc != 0 ]]; then
 fi
 
 echo Running tests...
-nosetests3 tests/unit --with-xunit --with-cov --cov reactivexcomponent
+nosetests3 tests/unit --with-xunit --with-cov --cov reactivexcomponent --exe
 rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 
 echo Checking setup.py...

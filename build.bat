@@ -11,7 +11,7 @@ IF ERRORLEVEL 1 (
 )
 
 echo Running tests...
-nosetests tests/unit --with-xunit --with-cov --cov reactivexcomponent
+nosetests tests/unit --with-xunit --with-cov --cov reactivexcomponent --exe
 IF ERRORLEVEL 1 EXIT /B 1
 
 echo Checking setup.py...
