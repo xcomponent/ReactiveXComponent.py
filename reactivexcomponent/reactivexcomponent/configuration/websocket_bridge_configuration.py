@@ -21,7 +21,11 @@ class Command:
 
     update = "update"
 
+    snapshot = "snapshot"
+
     subscribe = "subscribe"
+
+    unsubscribe = "unsubscribe"
 
     get_xc_api = "getXcApi"
 

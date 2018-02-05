@@ -20,7 +20,17 @@ Use the *build* script to build the API from sources.
 A ``reactivexcomponent-X.Y.Z.tar.gz`` pip package is build on the *dist\reactivexcomponent* folder.
 
 
-## Usage
+## Development
+
+### Dependencies 
+
+- Python 3
+- Pip
+- Virtualenv
+- python3-nose
+- Pylint
+
+### Starting up environment
 
 Use the scripts *dev_up* and *dev_down* to activate and deactivate a virtualenv containing the reactivexcomponent API.
 
@@ -79,9 +89,9 @@ Run the Web socket bridge from a XComponent project and then run the test file a
 
 Use the *nose* runner to run unit tests.
 ```
-dev_up.bat
+dev_up.bat (or source dev_up.sh) 
 cd reactivexcomponent
-nosetests tests/unit reactivexcomponent
+nosetests3 tests/unit reactivexcomponent --exe
 ```
 
 ## Contributing

@@ -2,7 +2,6 @@ from reactivexcomponent.communication.xc_connection import XcConnection
 
 
 class XcomponentAPI:
-
     def __init__(self):
         self.connection = None
 

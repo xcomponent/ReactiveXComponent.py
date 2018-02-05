@@ -3,7 +3,7 @@ call dev_up.bat
 cd reactivexcomponent
 
 echo Running lint...
-pylint reactivexcomponent -f parseable > pylint.out
+pylint reactivexcomponent --extension-pkg-whitelist=lxml -f parseable > pylint.out
 IF ERRORLEVEL 1 (
 	echo Lint failed!
 	type pylint.out
@@ -11,7 +11,7 @@ IF ERRORLEVEL 1 (
 )
 
 echo Running tests...
-nosetests tests/unit --with-xunit --with-cov --cov reactivexcomponent
+nosetests tests/unit --with-xunit --with-cov --cov reactivexcomponent --exe
 IF ERRORLEVEL 1 EXIT /B 1
 
 echo Checking setup.py...
