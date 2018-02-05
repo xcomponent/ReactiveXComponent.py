@@ -50,7 +50,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 Linux/OSX example:
 ```
-> bash dev_up.sh
+> source dev_up.sh
 (venv) > python3
 > python3
 Python 3.6.1 (v3.6.1:69c0db5, Mar 21 2017, 18:41:36) [MSC v.1900 64 bit (AMD64)] on win32
@@ -85,6 +85,15 @@ api.create_session(xc_api_file, server_url, callback)
 
 Run the Web socket bridge from a XComponent project and then run the test file as `python test.py`.
 
+## Running unit tests
+
+Use the *nose* runner to run unit tests.
+```
+dev_up.bat (or source dev_up.sh) 
+cd reactivexcomponent
+nosetests3 tests/unit reactivexcomponent --exe
+```
+
 ## Contributing
 
 1. Fork it!
@@ -92,7 +101,6 @@ Run the Web socket bridge from a XComponent project and then run the test file a
 3. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request
-
 ## License
 
 Apache License V2
