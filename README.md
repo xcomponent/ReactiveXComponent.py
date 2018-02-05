@@ -24,11 +24,11 @@ A ``reactivexcomponent-X.Y.Z.tar.gz`` pip package is build on the *dist\reactive
 
 ### Dependencies 
 
-Python 3
-python3-pip
-Virtualenv
-python3-node
-Pylint
+- Python 3
+- Pip
+- Virtualenv
+- python3-nose
+- Pylint
 
 ### Starting up environment
 
