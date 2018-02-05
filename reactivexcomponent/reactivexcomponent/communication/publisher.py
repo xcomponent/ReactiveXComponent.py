@@ -47,7 +47,6 @@ class Publisher:
             component_name, state_machine_name, message_type, json_message)
         self.websocket.send(to_websocket_input_format(data))
     
-    # pylint: disable=too-many-arguments
     def _header_config_ref(self, component_code, state_machine_code, message_type, state_machine_id, agent_id):
         return {
             "StateMachineId": format_fsharp_field(state_machine_id),
@@ -60,7 +59,6 @@ class Publisher:
             "IncomingType": 0,
             "MessageType": format_fsharp_field(message_type)
             }
-    # pylint: enable=too-many-arguments
 
     def _data_to_send_with_state_machine_ref(self, state_machine_ref, message_type, json_message):
         component_code = state_machine_ref["ComponentCode"]
