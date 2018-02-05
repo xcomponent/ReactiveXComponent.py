@@ -33,16 +33,16 @@ class XcSession:
         self.reply_publisher = Publisher(self.configuration, self.websocket)
         self.publishers.append(self.reply_publisher)
 
-        def on_message(websocket, message):
+        def on_message(_websocket, message):
             self.stream.on_next(message)
 
-        def on_open(websocket):
+        def on_open(_websocket):
             callback(SUCCESS, self)
 
-        def on_error(websocket, error):
+        def on_error(_websocket, error):
             callback(error, None)
 
-        def on_close(websocket):
+        def on_close(_websocket):
             print('### session %s closed ###' % server_url)
 
         self.websocket.on_message = on_message

@@ -1,5 +1,4 @@
 from lxml import etree
-from reactivexcomponent.configuration.websocket_bridge_configuration import EventType
 
 NAMESPACE = {'xmlns': 'http://xcomponent.com/DeploymentConfig.xsd'}
 
@@ -126,7 +125,7 @@ class APIConfiguration:
         subscriber = None
         for subscrib in ((self.root).findall('xmlns:clientAPICommunication', NAMESPACE))[0].\
                 findall('xmlns:subscribe', NAMESPACE):
-            if subscrib.attrib['eventType'] == EventType.Update:
+            if subscrib.attrib['eventType'] == event_type:
                 if (int(subscrib.attrib['componentCode']) == component_code) \
                         and (int(subscrib.attrib['stateMachineCode']) == state_machine_code):
                     subscriber = subscrib

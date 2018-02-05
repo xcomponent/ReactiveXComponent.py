@@ -107,7 +107,7 @@ class Subscriber:
             self.observable_subscribers[i].dispose()
         self.observable_subscribers = []
 
-    def remove_subscribed_state_machines(self, component_name, state_machine_name):
+    def remove_subscribed_statemachine(self, component_name, state_machine_name):
         index = self.subscribed_state_machines[component_name].index(state_machine_name)
         del self.subscribed_state_machines[component_name][index]
 
@@ -123,4 +123,4 @@ class Subscriber:
                 "Data": data
             }
             self.websocket.send(command_data_websocket_format(command_data))
-            self.remove_subscribed_state_machines(component_name, state_machine_name)
+            self.remove_subscribed_statemachine(component_name, state_machine_name)
