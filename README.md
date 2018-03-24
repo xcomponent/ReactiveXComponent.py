@@ -23,7 +23,7 @@ sudo pip3 install pipenv
 Install dependencies:
 
 ```
-pipenv install
+pipenv install --dev
 ```
 
 Run build script:
