@@ -9,7 +9,7 @@ os:
 - linux
 before_install:
  - pip install pipenv
- - pipenv install
+ - pipenv install --dev
 script:
  - pipenv run ./build.sh
 notifications:
