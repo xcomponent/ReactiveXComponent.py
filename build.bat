@@ -1,5 +1,3 @@
-call dev_up.bat
-
 cd reactivexcomponent
 
 echo Running lint...
@@ -23,4 +21,3 @@ python setup.py sdist
 IF ERRORLEVEL 1 EXIT /B 1
 
 cd ..
-call dev_down.bat

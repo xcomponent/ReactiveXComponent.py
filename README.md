@@ -29,7 +29,7 @@ pipenv install --dev
 Run build script:
 
 ```
-pipenv shell ./build.sh
+pipenv run ./build.sh ( or build.bat)
 ```
 
 A ``reactivexcomponent-X.Y.Z.tar.gz`` pip package is build on the *dist\reactivexcomponent* folder.
