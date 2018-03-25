@@ -1,7 +1,4 @@
 #!/bin/bash
-
-source ./dev_up.sh
-
 cd reactivexcomponent
 
 echo Running lint...
@@ -26,5 +23,3 @@ python3 setup.py sdist
 rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 
 cd ..
-
-deactivate

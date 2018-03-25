@@ -5,62 +5,34 @@
 
 Reactive XComponent is a Python client API that allows you to interact with microservices generated with XComponent software.
 
-## Build from source (on a Windows environment)
-Use the *build* script to build the API from sources.
-```
-build.bat
-```
-A ``reactivexcomponent-X.Y.Z.tar.gz`` pip package is build on the *dist\reactivexcomponent* folder.
-
-## Build from source (on a Linux/OSX environment)
-Use the *build* script to build the API from sources.
-```
-./build.sh
-```
-A ``reactivexcomponent-X.Y.Z.tar.gz`` pip package is build on the *dist\reactivexcomponent* folder.
-
-
 ## Development
 
 ### Dependencies 
 
 - Python 3
-- Pip
-- Virtualenv
-- python3-nose
-- Pylint
+- Pipenv
 
-### Starting up environment
+### Building and testing from sources
 
-Use the scripts *dev_up* and *dev_down* to activate and deactivate a virtualenv containing the reactivexcomponent API.
+Install <a href="https://docs.pipenv.org/">pipenv</a> (the officially recommended packaging tool for Python):
 
-Windows example:
 ```
-> dev_up.bat
-(venv) > python3
-> python
-Python 3.6.1 (v3.6.1:69c0db5, Mar 21 2017, 18:41:36) [MSC v.1900 64 bit (AMD64)] on win32
-Type "help", "copyright", "credits" or "license" for more information.
->>> import reactivexcomponent
->>> exit()
-
-(venv) > dev_down.bat
-> 
+sudo pip3 install pipenv
 ```
 
-Linux/OSX example:
-```
-> source dev_up.sh
-(venv) > python3
-> python3
-Python 3.6.1 (v3.6.1:69c0db5, Mar 21 2017, 18:41:36) [MSC v.1900 64 bit (AMD64)] on win32
-Type "help", "copyright", "credits" or "license" for more information.
->>> import reactivexcomponent
->>> exit()
+Install dependencies:
 
-(venv) > deactivate
-> 
 ```
+pipenv install --dev
+```
+
+Run build script:
+
+```
+pipenv run ./build.sh ( or build.bat)
+```
+
+A ``reactivexcomponent-X.Y.Z.tar.gz`` pip package is build on the *dist\reactivexcomponent* folder.
 
 ## Sample code
 
@@ -88,8 +60,9 @@ Run the Web socket bridge from a XComponent project and then run the test file a
 ## Running unit tests
 
 Use the *nose* runner to run unit tests.
+
 ```
-dev_up.bat (or source dev_up.sh) 
+pipenv shell
 cd reactivexcomponent
 nosetests3 tests/unit reactivexcomponent --exe
 ```
