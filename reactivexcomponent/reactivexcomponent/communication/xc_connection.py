@@ -1,5 +1,5 @@
-from reactivexcomponent.communication.xc_session import XcSession
 from typing import Callable, Any
+from reactivexcomponent.communication.xc_session import XcSession
 
 class XcConnection:
     def __init__(self) -> None:
