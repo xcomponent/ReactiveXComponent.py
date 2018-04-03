@@ -1,5 +1,5 @@
 import json
-from typings import Any, Dict 
+from typing import Any, Dict 
 
 def get_header_with_incoming_type() -> Dict[str, Any]:
     return {

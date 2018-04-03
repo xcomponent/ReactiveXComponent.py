@@ -1,5 +1,5 @@
 import json
-from typings import Dict, Any
+from typing import Dict, Any
 from reactivexcomponent.configuration.serializer import to_websocket_input_format
 from reactivexcomponent.configuration.api_configuration import format_fsharp_field
 from reactivexcomponent.configuration.api_configuration import APIConfiguration

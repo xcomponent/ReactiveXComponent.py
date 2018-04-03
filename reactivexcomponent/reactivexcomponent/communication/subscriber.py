@@ -1,8 +1,8 @@
 import json
 import websocket as WebSocket
 from rx.subjects import Subject
-from rx.observable import Observable
-from typings import Dict, Any, List
+from rx import Observable
+from typing import Dict, Any, List
 from reactivexcomponent.communication.publisher import Publisher
 from reactivexcomponent.configuration.websocket_bridge_configuration import EventType, Command, WebsocketTopicKind
 from reactivexcomponent.configuration.serializer import command_data_websocket_format, get_header_with_incoming_type

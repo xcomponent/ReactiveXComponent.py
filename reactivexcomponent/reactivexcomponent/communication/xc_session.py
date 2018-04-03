@@ -1,6 +1,6 @@
 import ssl
 import websocket as WebSocket
-from typings import List, Any, Callable
+from typing import List, Any, Callable
 from rx.subjects import Subject
 from reactivexcomponent.communication.publisher import Publisher
 from reactivexcomponent.communication.subscriber import Subscriber
