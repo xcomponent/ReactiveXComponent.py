@@ -6,13 +6,16 @@ from reactivexcomponent.communication.publisher import Publisher
 from reactivexcomponent.communication.subscriber import Subscriber
 from reactivexcomponent.configuration.api_configuration import APIConfiguration
 
+
 def remove_element(table: List[Any], element: Any) -> List[Any]:
     if element in table:
         del table[table.index(element)]
     else:
         raise Exception("Element to remove not found")
 
+
 SUCCESS = None
+
 
 class XcSession:
     def __init__(self) -> None:
@@ -54,7 +57,8 @@ class XcSession:
 
     def create_subscriber(self) -> Subscriber:
         configuration = APIConfiguration(self.xc_api)
-        subscriber = Subscriber(configuration, self.websocket, self.stream, self.reply_publisher)
+        subscriber = Subscriber(
+            configuration, self.websocket, self.stream, self.reply_publisher)
         self.subscribers.append(subscriber)
         return subscriber
 
@@ -66,9 +70,9 @@ class XcSession:
 
     def dispose_publishers_subscribers(self) -> None:
         for publisher in self.publishers:
-            self.dispose_publisher(publisher) 
+            self.dispose_publisher(publisher)
         for subscriber in self.subscribers:
-            self.dispose_subscriber(subscriber) 
+            self.dispose_subscriber(subscriber)
         self.publishers = []
         self.subscribers = []
 

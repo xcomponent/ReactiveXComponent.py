@@ -1,6 +1,7 @@
 from typing import Callable, Any
 from reactivexcomponent.communication.xc_connection import XcConnection
 
+
 class XcomponentAPI:
     def __init__(self) -> None:
         pass

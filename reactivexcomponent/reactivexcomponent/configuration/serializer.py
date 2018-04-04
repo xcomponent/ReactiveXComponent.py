@@ -1,10 +1,12 @@
 import json
-from typing import Any, Dict 
+from typing import Any, Dict
+
 
 def get_header_with_incoming_type() -> Dict[str, Any]:
     return {
         "IncomingType": 0
     }
+
 
 def to_websocket_input_format(data: Dict[str, Any]) -> str:
     # pylint: disable=unsubscriptable-object
@@ -13,12 +15,15 @@ def to_websocket_input_format(data: Dict[str, Any]) -> str:
                                 json.dumps(data['Event']))
     # pylint: enable=unsubscriptable-object
 
+
 def command_data_websocket_format(command: Dict[str, Any]) -> str:
     return '{0} {1}'.format(command["Command"],
                             json.dumps(command["Data"]))
 
+
 def get_json_data(data: Dict[str, Any]) -> Any:
     return str, json.loads(data[data.index("{"):data.rindex("}") + 1])
+
 
 def deserialize(data: str) -> Dict[str, Any]:
     list_data = data.split()
@@ -30,6 +35,7 @@ def deserialize(data: str) -> Dict[str, Any]:
         "topic": topic,
         "stringData": string_data
     }
+
 
 def deserialize_without_topic(data: str) -> Dict[str, Any]:
     list_data = data.split()

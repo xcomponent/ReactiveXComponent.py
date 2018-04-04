@@ -5,22 +5,25 @@ from rx import Observable
 from typing import Dict, Any, List
 from reactivexcomponent.communication.publisher import Publisher
 from reactivexcomponent.configuration.websocket_bridge_configuration import EventType, Command, WebsocketTopicKind
-from reactivexcomponent.configuration.serializer import command_data_websocket_format, get_header_with_incoming_type
-from reactivexcomponent.configuration.serializer import deserialize, get_json_data
+from reactivexcomponent.configuration.serializer import command_data_websocket_format, get_header_with_incoming_type, deserialize, get_json_data
 from reactivexcomponent.configuration.api_configuration import APIConfiguration
+
 
 def get_data_to_send(topic: str, kind: int) -> Dict[str, Any]:
     return {"Header": get_header_with_incoming_type(),
             "JsonMessage": json.dumps({
                 "Topic": {"Key": topic, "Kind": kind}
             })
-           }
+            }
+
 
 def is_same_state_machine(json_data: Dict[str, Any], state_machine_code: int) -> bool:
     return json_data["stateMachineRef"]["StateMachineCode"] == state_machine_code
 
+
 def is_same_component(json_data: Dict[str, Any], component_code: int) -> bool:
     return json_data["stateMachineRef"]["ComponentCode"] == component_code
+
 
 def is_subscribed(subscribed_state_machines: List[str], component_name: str, state_machine_name: str) -> bool:
     return (component_name in subscribed_state_machines) and (
@@ -60,10 +63,10 @@ class Subscriber:
         state_machine_code = self.configuration.get_state_machine_code(
             component_name, state_machine_name)
         filtered_observable = self.subject.map(deserialize) \
-                                 .filter(lambda data: data["command"] == Command.update) \
-                                 .map(lambda data: self._json_data_from_event(data["stringData"])) \
-                                 .filter(lambda json_data: is_same_component(json_data, component_code) and 
-                                         is_same_state_machine(json_data, state_machine_code))
+            .filter(lambda data: data["command"] == Command.update) \
+            .map(lambda data: self._json_data_from_event(data["stringData"])) \
+            .filter(lambda json_data: is_same_component(json_data, component_code) and
+                    is_same_state_machine(json_data, state_machine_code))
         return filtered_observable
 
     def _add_subscribe_state_machine(self, component_name: str, state_machine_name: str) -> None:
@@ -89,11 +92,13 @@ class Subscriber:
 
     def can_subscribe(self, component_name: str, state_machine_name: str) -> bool:
         component_code = self.configuration.get_component_code(component_name)
-        state_machine_code = self.configuration.get_state_machine_code(component_name, state_machine_name)
+        state_machine_code = self.configuration.get_state_machine_code(
+            component_name, state_machine_name)
         return self.configuration.contains_subscriber(component_code, state_machine_code, EventType.Update)
 
     def get_state_machine_updates(self, component_name: str, state_machine_name: str) -> Subject:
-        filtered_observable = self._prepare_state_machine_updates(component_name, state_machine_name)
+        filtered_observable = self._prepare_state_machine_updates(
+            component_name, state_machine_name)
         self._send_subscribe_request(component_name, state_machine_name)
         return filtered_observable
 
@@ -109,14 +114,18 @@ class Subscriber:
         self.observable_subscribers = []
 
     def remove_subscribed_statemachine(self, component_name: str, state_machine_name: str) -> None:
-        index = self.subscribed_state_machines[component_name].index(state_machine_name)
+        index = self.subscribed_state_machines[component_name].index(
+            state_machine_name)
         del self.subscribed_state_machines[component_name][index]
 
     def unsubscribe(self, component_name: str, state_machine_name: str) -> None:
         if is_subscribed(self.subscribed_state_machines, component_name, state_machine_name):
-            component_code = self.configuration.get_component_code(component_name)
-            state_machine_code = self.configuration.get_state_machine_code(component_name, state_machine_name)
-            topic = self.configuration.get_subscriber_topic(component_code, state_machine_code, EventType.Update)
+            component_code = self.configuration.get_component_code(
+                component_name)
+            state_machine_code = self.configuration.get_state_machine_code(
+                component_name, state_machine_name)
+            topic = self.configuration.get_subscriber_topic(
+                component_code, state_machine_code, EventType.Update)
             kind = WebsocketTopicKind.Public
             data = get_data_to_send(topic, kind)
             command_data = {
@@ -124,4 +133,5 @@ class Subscriber:
                 "Data": data
             }
             self.websocket.send(command_data_websocket_format(command_data))
-            self.remove_subscribed_statemachine(component_name, state_machine_name)
+            self.remove_subscribed_statemachine(
+                component_name, state_machine_name)

@@ -1,12 +1,7 @@
 cd reactivexcomponent
 
-echo Running lint...
-pylint reactivexcomponent --extension-pkg-whitelist=lxml -f parseable > pylint.out
-IF ERRORLEVEL 1 (
-	echo Lint failed!
-	type pylint.out
-	EXIT /B 1
-)
+echo Running flake8...
+flake8 reactivexcomponent > flake8.out
 
 echo Running tests...
 nosetests tests/unit --with-xunit --with-cov --cov reactivexcomponent --exe

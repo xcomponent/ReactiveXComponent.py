@@ -2,8 +2,8 @@ import json
 from typing import Dict, Any
 import websocket as WebSocket
 from reactivexcomponent.configuration.serializer import to_websocket_input_format
-from reactivexcomponent.configuration.api_configuration import format_fsharp_field
-from reactivexcomponent.configuration.api_configuration import APIConfiguration
+from reactivexcomponent.configuration.api_configuration import format_fsharp_field, APIConfiguration
+
 
 class Publisher:
     def __init__(self, apiconfiguration: APIConfiguration, websocket_instance: WebSocket.WebSocketApp) -> None:
@@ -29,8 +29,10 @@ class Publisher:
         component_code = self.configuration.get_component_code(component_name)
         state_machine_code = self.configuration.get_state_machine_code(
             component_name, state_machine_name)
-        header_config = self._header_config(component_code, state_machine_code, message_type)
-        routing_key = self._get_routing_key(component_code, state_machine_code, message_type)
+        header_config = self._header_config(
+            component_code, state_machine_code, message_type)
+        routing_key = self._get_routing_key(
+            component_code, state_machine_code, message_type)
         return {
             "RoutingKey": routing_key,
             "ComponentCode": component_code,
@@ -39,25 +41,27 @@ class Publisher:
 
     def can_publish(self, component_name: str, state_machine_name: str, message_type: str) -> bool:
         if self.configuration.contains_state_machine(component_name, state_machine_name):
-            component_code = self.configuration.get_component_code(component_name)
-            state_machine_code = self.configuration.get_state_machine_code(component_name, state_machine_name)
+            component_code = self.configuration.get_component_code(
+                component_name)
+            state_machine_code = self.configuration.get_state_machine_code(
+                component_name, state_machine_name)
             return self.configuration.contains_publisher(component_code, state_machine_code, message_type)
         return False
 
-    def send_message(self,\
-                     component_name: str,\
-                     state_machine_name: str,\
-                     message_type: str,\
+    def send_message(self,
+                     component_name: str,
+                     state_machine_name: str,
+                     message_type: str,
                      json_message: Dict[str, Any]) -> None:
         data = self._data_to_send(
             component_name, state_machine_name, message_type, json_message)
         self.websocket.send(to_websocket_input_format(data))
 
-    def _header_config_ref(self,\
-                           component_code: int,\
-                           state_machine_code: int,\
-                           message_type: str,\
-                           state_machine_id: int,\
+    def _header_config_ref(self,
+                           component_code: int,
+                           state_machine_code: int,
+                           message_type: str,
+                           state_machine_id: int,
                            agent_id: int) -> Dict[str, Any]:
         return {
             "StateMachineId": format_fsharp_field(state_machine_id),
@@ -69,16 +73,17 @@ class Publisher:
                                                                   message_type)["eventCode"],
             "IncomingType": 0,
             "MessageType": format_fsharp_field(message_type)
-            }
+        }
 
-    def _data_to_send_with_state_machine_ref(self, state_machine_ref: Dict[str, Any],\
-                                             message_type: str,\
+    def _data_to_send_with_state_machine_ref(self, state_machine_ref: Dict[str, Any],
+                                             message_type: str,
                                              json_message: Dict[str, Any]) -> Dict[str, Any]:
         component_code = state_machine_ref["ComponentCode"]
         state_machine_code = state_machine_ref["StateMachineCode"]
         header_config = self._header_config_ref(component_code, state_machine_code, message_type,
                                                 state_machine_ref["StateMachineId"], state_machine_ref["AgentId"])
-        routing_key = self._get_routing_key(component_code, state_machine_code, message_type)
+        routing_key = self._get_routing_key(
+            component_code, state_machine_code, message_type)
         return {
             "RoutingKey": routing_key,
             "ComponentCode": component_code,
@@ -88,9 +93,10 @@ class Publisher:
             }
         }
 
-    def send_with_state_machine_ref(self,\
-                                    state_machine_ref: Dict[str, Any],\
-                                    message_type: str,\
+    def send_with_state_machine_ref(self,
+                                    state_machine_ref: Dict[str, Any],
+                                    message_type: str,
                                     json_message: Dict[str, Any]) -> None:
-        data = self._data_to_send_with_state_machine_ref(state_machine_ref, message_type, json_message)
+        data = self._data_to_send_with_state_machine_ref(
+            state_machine_ref, message_type, json_message)
         self.websocket.send(to_websocket_input_format(data))
