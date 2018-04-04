@@ -2,11 +2,11 @@
 cd reactivexcomponent
 
 echo Running lint...
-pylint reactivexcomponent --extension-pkg-whitelist=lxml -f parseable > pylint.out
+flake8 reactivexcomponent > flake8.out
 
 rc=$?; if [[ $rc != 0 ]]; then 
-    echo Lint failed!
-    cat pylint.out
+    echo Flake8 failed!
+    cat flake8.out
     exit $rc; 
 fi
 
